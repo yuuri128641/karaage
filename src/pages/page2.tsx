@@ -8,10 +8,11 @@ const Title = styled.h1`
 `;
 
 const Page2: NextPage = () => {
+  const titleTag = "p"
   return (
     <>
       <main>
-        <Title>sample page2</Title>
+        <Title as={titleTag}>sample page2</Title>
         <SampleTitle title="SampleTitle" />
       </main>
     </>

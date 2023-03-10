@@ -40,5 +40,5 @@ const StyledSampleTitle = styled.h3`
 `;
 
 export const SampleTitle: React.FC<SampleTitleProps> = ({ title, className }) => {
-    return <StyledSampleTitle className={className}>{title}</StyledSampleTitle>;
+    return <StyledSampleTitle as="div" className={className}>{title}</StyledSampleTitle>;
 };
