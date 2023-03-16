@@ -7,7 +7,7 @@ const Page2: NextPage = () => {
       <main>
         <h1>next-sample</h1>
         <Link href="page2">go to page2</Link>
-        <Link href="page2">go to page3</Link>
+        <Link href="page3">go to page3</Link>
       </main>
     </>
   );
