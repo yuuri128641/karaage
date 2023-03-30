@@ -15,6 +15,7 @@ module.exports = {
     "builder": "@storybook/builder-webpack5"
   },
   "staticDirs": ["../public"],
+  "typescript": { reactDocgen: false }, // nodeのverが高くてうまく動かない時に入れる
   webpackFinal: async (config) => {
     config.resolve.alias = {
         ...config.resolve.alias,
