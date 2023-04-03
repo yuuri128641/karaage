@@ -8,18 +8,13 @@
 
 ### Node.js
 
-Node.js v14.xをマシンへインストールします。
+Node.js v18.xをマシンへインストールします。
 次のいずれかの方法でのインストールをおすすめします。
 
 * [公式インストーラー](https://nodejs.org/dist/latest-v14.x/)
 * [nodenv](https://github.com/nodenv/nodenv)
 * [nodebrew](https://github.com/hokaccha/nodebrew)
 * [nvm](https://github.com/nvm-sh/nvm)
-
-```shell script
-$ node -v
-v14.9.0
-```
 
 ### Yarn
 
@@ -65,6 +60,16 @@ Nextアプリをビルドします。
 $ yarn build
 ```
 
+## storybook
+
+開発サーバーを起動するには、次のコマンドを実行します。
+
+```shell script
+$ yarn storybook
+```
+
+http://localhost:3000 で開発サーバーが起動します。
+
 ## Directory
 基本的に src を編集
 
@@ -74,19 +79,22 @@ $ yarn build
 ├── node_modules/
 │   └── パッケージ各種
 │
+├── .storybook/
+│   └── storybookの設定
+│
+├── .next/
+│
 ├── public/（そのまま公開するファイル）
 │   └── favicon.png
 │
 ├── src/（ビルド前のソース）
-│   ├── assets/
-│   │    ├── images/（画像）
-│   │    └── styles/（postcssの変数など）
-│   ├── components/（vueのコンポーネント）
-│   ├── helper/
-│   │    └── Constants.ts（定数用）
-│   ├── layouts/（vueのレイアウト）
-│   └── pages/（各ページはこの配下に作成）
-│        └── index.vue（これがトップページになる）
+│   ├── components/（コンポーネント）
+│   │    └── atoms
+│   │    └── molecules
+│   ├── pages/（ページ）
+│   ├── stories/
+│   ├── styles/
+│   └── utils/
 │
 ├── .git/
 ├── .gitignore
