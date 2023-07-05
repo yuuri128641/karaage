@@ -86,14 +86,15 @@ const ProjectItem = styled.div<{
     startPositionLength: number
     duplicationEventLength: number
 }>`
-    width: ${({ durationLength }) =>  durationLength && durationLength * MONTH_WIDTH }px;
-    height: 32px;
+    width: ${({ durationLength }) =>  durationLength && (durationLength +1) * MONTH_WIDTH - 2 }px;
+    height: 40px;
     background-color: ${colorPalette.blue200};
     color: ${colorPalette.white};
     display: flex;
     line-height: 1;
     font-size: 14px;
     padding: 4px;
+    box-sizing: border-box;
     position: absolute;
     left: ${({ startPositionLength }) =>  startPositionLength && startPositionLength * MONTH_WIDTH }px;
     top: ${({ duplicationEventLength }) =>  duplicationEventLength && duplicationEventLength * 44 }px;
@@ -170,8 +171,6 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                             key={index}
                         >
                             <ProjectTitle>
-                                {job.jobStartTime}
-                                {job.durationLength}
                                 {job.title}
                             </ProjectTitle>
                             {job.projectDurationLength !== 1 &&
