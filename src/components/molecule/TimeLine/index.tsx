@@ -1,11 +1,12 @@
-import React from "react"
+import React, { useEffect , useRef} from "react"
 import styled from "styled-components";
 import { colorPalette } from "@/styles/const/color"
 import { createDurationDate } from "@/utils/createDurationDate"
 import { FIRST_WORKING_DATE } from "site.config"
+import { JobHistoryFormat } from "@/models"
 
 type TimeLineProps = {
-    jobDate?: any[];
+    jobDate?: JobHistoryFormat[];
 };
 
 const MONTH_WIDTH = 40;
@@ -23,8 +24,9 @@ const TimeLineWrap = styled.div`
 
 const DateWap = styled.div`
     display: flex;
-    height: 100%;
+    height: 700%;
     padding: 4px;
+
 `;
 
 const DateItem = styled.div<{isJanuary: boolean}>`
@@ -46,6 +48,7 @@ const CurrentText = styled.div`
     padding-right: 4px;
     font-weight: 700;
     color: ${colorPalette.lightGray600};
+    right: 0;
 `;
 
 const YearText = styled.div`
@@ -63,16 +66,6 @@ const DayText = styled.div`
     font-size: 12px;
     padding-left: 4px;
     color: ${colorPalette.lightGray600};
-`;
-
-const CompanyArea = styled.div<{durationLength: number}>`
-    background-color: rgba(0, 64, 93, 0.5);
-    height: 32px;
-    position: absolute;
-    bottom: 0;
-    color: ${colorPalette.white};
-    width: 100%;
-    //width: ${({ durationLength }) =>  durationLength && durationLength * MONTH_WIDTH }px;
 `;
 
 const ProjectArea = styled.div`
@@ -128,6 +121,7 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
     const startDate = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
     const tadyDate = new Date()
     const durationDates = createDurationDate(startDate, tadyDate)
+    const timelineRef = useRef<HTMLDivElement>(null);;
 
     // 年度判定
     const changeYear = (index:number) => {
@@ -140,14 +134,18 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
         return newYear;
     }
 
+    useEffect(()=>{
+        timelineRef?.current?.scrollIntoView({
+            inline: "end"
+        });
+    }, [])  
+
     return (
         <TimeLineWrap>
             <DateWap>
-                
                 {durationDates.map((item, index:number) => (
                     <>
                     <DateItem key="index" isJanuary={changeYear(index)}>
-                        
                         {changeYear(index) &&
                             <YearText>{item.year}年</YearText>
                         }
@@ -157,13 +155,9 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                         <DayText>{item.month}</DayText>
                     </DateItem>
                     </>
-
                 ))}
-                <CompanyArea durationLength={durationDates.length}>
-                    aaaaa
-                </CompanyArea>
                 <ProjectArea>
-                    {jobDate && jobDate.map((job, index) => (
+                    {jobDate && jobDate.map((job, index: number) => (
                         <ProjectItem 
                             durationLength={job.projectDurationLength}
                             startPositionLength={job.jobStartTime}
@@ -179,7 +173,7 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                         </ProjectItem>
                     ))}
                 </ProjectArea>
-                
+                <div ref={timelineRef} />
             </DateWap>
         </TimeLineWrap>
     );
