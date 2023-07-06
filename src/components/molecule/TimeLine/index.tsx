@@ -5,7 +5,7 @@ import { createDurationDate } from "@/utils/createDurationDate"
 import { FIRST_WORKING_DATE } from "site.config"
 
 type TimeLineProps = {
-    blogs?: any;
+    jobDate?: any[];
 };
 
 const MONTH_WIDTH = 40;
@@ -163,7 +163,7 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                     aaaaa
                 </CompanyArea>
                 <ProjectArea>
-                    {jobDate.map((job, index) => (
+                    {jobDate && jobDate.map((job, index) => (
                         <ProjectItem 
                             durationLength={job.projectDurationLength}
                             startPositionLength={job.jobStartTime}

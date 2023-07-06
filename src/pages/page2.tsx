@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { NextPage } from "next"
 import styled from "styled-components";
 import { SampleTitle } from "@/components/atoms/SampleTitle"
@@ -7,45 +7,8 @@ import { FIRST_WORKING_DATE } from "site.config"
 import { client } from "@/utils/client";
 
 
-const blogTest = (blog:any) => {
-  const newBlogList:any = [];
-  const viewedEventList:any =[];
-
-  blog.map((item:any) => {
-    let duplicationIndex = 0;
-
-    const startDate:Date = new Date(item.startDate);
-    const endDate:Date = new Date(item.endDate);
-    const firstJobDate:Date = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
-
-    const startMonth:number = startDate.getFullYear() * 12 + startDate.getMonth();
-    const endMonth:number = endDate.getFullYear() * 12 + endDate.getMonth();
-    const firstJobMonth:number = firstJobDate.getFullYear() * 12 + firstJobDate.getMonth();
-    
-    if (viewedEventList.length) {
-      viewedEventList.reduceRight((i, viewedEventItem:number) => {
-        if(startMonth > viewedEventItem) {
-          duplicationIndex++;""
-        }  
-      })
-    }
-
-    const newObj = {...item, 
-      duplicationEventLength: duplicationIndex,
-      projectDurationLength: endMonth - startMonth,
-      jobStartTime: startMonth - firstJobMonth,
-    };
-    
-    newBlogList.push(newObj)
-    viewedEventList.push(startMonth - firstJobMonth + startMonth - firstJobMonth)
-  })
-
-  return newBlogList
-}
-
 export const getStaticProps = async () => {
   const blog = await client.get({ endpoint: "jobhistory?orders=startDate" });
-  blogTest(blog.contents)
 
   return {
     props: {
@@ -54,28 +17,69 @@ export const getStaticProps = async () => {
   };
 };
 
+
+const blogTest = (blog:any) => {
+  const newBlogList:any = [];
+  const viewedEventList:any =[];
+
+  if(blog && 0 < blog.length) {
+    blog.map((item:any) => {
+      let duplicationIndex = 0;
+  
+      const startDate:Date = new Date(item.startDate);
+      const endDate:Date = new Date(item.endDate);
+      const firstJobDate:Date = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
+  
+      const startMonth:number = startDate.getFullYear() * 12 + startDate.getMonth();
+      const endMonth:number = endDate.getFullYear() * 12 + endDate.getMonth();
+      const firstJobMonth:number = firstJobDate.getFullYear() * 12 + firstJobDate.getMonth();
+      
+      if (viewedEventList.length) {
+        viewedEventList.reduceRight((i:any, viewedEventItem:number) => {
+          if(startMonth > viewedEventItem) {
+            duplicationIndex++;""
+          }  
+        })
+      }
+  
+      const newObj = {...item, 
+        duplicationEventLength: duplicationIndex,
+        projectDurationLength: endMonth - startMonth,
+        jobStartTime: startMonth - firstJobMonth,
+      };
+      
+      newBlogList.push(newObj)
+      viewedEventList.push(startMonth - firstJobMonth + startMonth - firstJobMonth)
+    })
+  
+    return newBlogList
+  }
+}
+
 const Title = styled.h1`
   font-size: 40px;
   font-weight: 700;
 `;
 
+type Props = {
+  blogs: any[];
+};
 
-const Page2: NextPage = ({blogs}) => {
+
+const Page2: NextPage<Props> = ({blogs}) => {
   const titleTag = "p"
 
-  const jobDate = blogTest(blogs)
-
-  console.log(jobDate)
+  const jobDate:any = blogTest(blogs)
 
   return (
     <>
       <main>
         <Title as={titleTag}>sample page2</Title>
-        <div>aaa + {process.env.NEXT_PUBLIC_MICROCMS_API_KEY}</div>
-        <SampleTitle title="aaaa" />
-        <TimeLine jobDate={jobDate} />
+        {jobDate &&
+          <TimeLine jobDate={jobDate} /> 
+        }
 
-        {jobDate.map((item, index) => (
+        {jobDate && jobDate.map((item:any, index:number) => (
           <div key={index}>
             {item.title}
             <p>開始日{item.startDate}</p>
