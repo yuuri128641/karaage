@@ -1,4 +1,4 @@
-import React, { useEffect , useRef} from "react"
+import React, { useState, useEffect , useRef} from "react"
 import styled from "styled-components";
 import { colorPalette } from "@/styles/const/color"
 import { createDurationDate } from "@/utils/createDurationDate"
@@ -11,22 +11,60 @@ type TimeLineProps = {
 
 const MONTH_WIDTH = 40;
 
-const TimeLineWrap = styled.div`
+const TimeLineWrap = styled.div<{isOpen: boolean}>`
+    position: fixed;
     width: 100%;
-    height: 360px;
     background-color: ${colorPalette.lightGray100};
     position: fixed;
-    bottom: 0;
-    overflow-x: auto;
     box-shadow: 0px 0px 20px -8px #bababa;
+    bottom: ${({ isOpen }) =>  isOpen ? "-300px": "0" }; 
+    transition: all 0.3s ease;
+`;
+
+const ScrollArea = styled.div<{isOpen: boolean}>`
+    overflow-x: auto;
     overflow-y: hidden;
+    position: relative;
+    height: 360px;
+    width: 100%;
+`;
+
+const TimeLineButton = styled.button<{isOpen: boolean}>`
+    background-color: ${colorPalette.lightGray100};
+    position: absolute;
+    right: 0;
+    top: -40px;
+    height: 40px;
+    width: 200px;
+    border: 0;
+    color: ${colorPalette.lightGray1000};
+    border-top: 4px solid ${colorPalette.lightGray1000};
+    font-size: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    &:hover {
+        opacity: 0.7;
+    }
+    &::after {
+        content: "";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 8px 8px 0 8px;
+        border-color: ${colorPalette.lightGray1000} transparent transparent transparent;
+        transform: ${({ isOpen }) =>  isOpen ? "rotate(180deg)" : "rotate(0)" }; 
+        transition: all 0.3s ease;
+    }
 `;
 
 const DateWap = styled.div`
     display: flex;
-    height: 700%;
-    padding: 4px;
-
+    padding: 4px 0;
+    height: 100%;
 `;
 
 const DateItem = styled.div<{isJanuary: boolean}>`
@@ -58,10 +96,11 @@ const YearText = styled.div`
     top: 0;
     color: ${colorPalette.lightGray600};
     padding-left: 4px;
+    padding-top: 4px;
 `;
 
 const DayText = styled.div`
-    padding-top: 28px;
+    padding-top: 32px;
     white-space: nowrap;
     font-size: 12px;
     padding-left: 4px;
@@ -90,7 +129,7 @@ const ProjectItem = styled.div<{
     box-sizing: border-box;
     position: absolute;
     left: ${({ startPositionLength }) =>  startPositionLength && startPositionLength * MONTH_WIDTH }px;
-    top: ${({ duplicationEventLength }) =>  duplicationEventLength && duplicationEventLength * 44 }px;
+    top: ${({ duplicationEventLength }) =>  duplicationEventLength ? (duplicationEventLength * 44 + 4) : 4 }px;
     border-radius: 4px;
     align-items: center;
     gap: 4px;
@@ -122,6 +161,9 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
     const tadyDate = new Date()
     const durationDates = createDurationDate(startDate, tadyDate)
     const timelineRef = useRef<HTMLDivElement>(null);;
+    const [open, setOpen] = useState(true)
+
+    const toggleTimeline = () => setOpen(!open)
 
     // 年度判定
     const changeYear = (index:number) => {
@@ -140,41 +182,48 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
         });
     }, [])  
 
+
     return (
-        <TimeLineWrap>
-            <DateWap>
-                {durationDates.map((item, index:number) => (
-                    <>
-                    <DateItem key="index" isJanuary={changeYear(index)}>
-                        {changeYear(index) &&
-                            <YearText>{item.year}年</YearText>
-                        }
-                        {durationDates.length - 1 === index &&
-                            <CurrentText>Current</CurrentText>
-                        }
-                        <DayText>{item.month}</DayText>
-                    </DateItem>
-                    </>
-                ))}
-                <ProjectArea>
-                    {jobDate && jobDate.map((job, index: number) => (
-                        <ProjectItem 
-                            durationLength={job.projectDurationLength}
-                            startPositionLength={job.jobStartTime}
-                            duplicationEventLength={job.duplicationEventLength}
-                            key={index}
-                        >
-                            <ProjectTitle>
-                                {job.title}
-                            </ProjectTitle>
-                            {job.projectDurationLength !== 1 &&
-                                <TagItem>Next.js</TagItem>
+        <TimeLineWrap isOpen={open}>
+            <TimeLineButton
+                onClick={toggleTimeline}
+                isOpen={open}
+            >
+                {open ? "OPEN" : "CLOSE"} JobHistory
+            </TimeLineButton>
+            <ScrollArea isOpen={open}>
+                <DateWap>
+                    {durationDates.map((item, index:number) => (
+                        <DateItem key="index" isJanuary={changeYear(index)}>
+                            {changeYear(index) &&
+                                <YearText>{item.year}年</YearText>
                             }
-                        </ProjectItem>
+                            {durationDates.length - 1 === index &&
+                                <CurrentText>Current</CurrentText>
+                            }
+                            <DayText>{item.month}</DayText>
+                        </DateItem>
                     ))}
-                </ProjectArea>
-                <div ref={timelineRef} />
-            </DateWap>
+                    <ProjectArea>
+                        {jobDate && jobDate.map((job, index: number) => (
+                            <ProjectItem 
+                                durationLength={job.projectDurationLength}
+                                startPositionLength={job.jobStartTime}
+                                duplicationEventLength={job.duplicationEventLength}
+                                key={index}
+                            >
+                                <ProjectTitle>
+                                    {job.title}
+                                </ProjectTitle>
+                                {job.projectDurationLength !== 1 &&
+                                    <TagItem>Next.js</TagItem>
+                                }
+                            </ProjectItem>
+                        ))}
+                    </ProjectArea>
+                    <div ref={timelineRef} />
+                </DateWap>
+            </ScrollArea>
         </TimeLineWrap>
     );
 };

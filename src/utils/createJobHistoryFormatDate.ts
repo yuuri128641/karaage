@@ -4,43 +4,39 @@ import { JobHistory, JobHistoryFormat } from "@/models"
 export const createJobHistoryFormatDate = (date:JobHistory[]) => {
     const newBlogList:JobHistoryFormat[] = [];
     const viewedEventList:any = [];
-    const tadyDate:Date = new Date()
-    const todayMonth = tadyDate.getFullYear() * 12 + tadyDate.getMonth() + 1;
+    const todyDate:Date = new Date()
+    const todayMonth = todyDate.getFullYear() * 12 + todyDate.getMonth() + 1;
+    // 終了日が設定されてなかったら現在進行形の今日の日付を設定
     let endMonth = todayMonth;
 
     date?.map((item:any) => {
         let duplicationIndex = 0;
 
-        console.log(item.title)
-
         const startDate:Date = new Date(item.startDate);
         const endDate:Date = new Date(item.endDate);
         const firstJobDate:Date = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
-
         const startMonth:number = startDate.getFullYear() * 12 + startDate.getMonth() + 1;
-
-        const itemEndMonth:number = endDate.getFullYear() * 12 + endDate.getMonth() + 1;
         const firstJobMonth:number = firstJobDate.getFullYear() * 12 + firstJobDate.getMonth();
 
-        if (!(endDate.getFullYear() === tadyDate.getFullYear()) 
-        || (endDate.getMonth() < tadyDate.getMonth())) {
-        console.log(tadyDate.getFullYear())
-        console.log(endDate.getFullYear())
-        endMonth = itemEndMonth;
+        // 終了日が設定されていたら期間を設定
+        if (item.endDate) {
+            endMonth = endDate.getFullYear() * 12 + endDate.getMonth() + 1;
         }
         
+        // 先に開始した業務が存在する場合
         if (viewedEventList.length) {
-        viewedEventList.reduceRight((i:void, viewedEventItem:number) => {
-            if(startMonth > viewedEventItem) {
-            duplicationIndex++;""
-            }  
-        })
+            viewedEventList.reduceRight((i:void, viewedEventItem:number) => {
+                if(startMonth > viewedEventItem) {
+                    duplicationIndex++;
+                }  
+            })
         }
 
-        const newObj = {...item, 
-        duplicationEventLength: duplicationIndex,
-        projectDurationLength: endMonth - startMonth,
-        jobStartTime: startMonth - firstJobMonth,
+        const newObj = {
+            ...item, 
+            duplicationEventLength: duplicationIndex,
+            projectDurationLength: endMonth - startMonth,
+            jobStartTime: startMonth - firstJobMonth,
         };
         
         newBlogList.push(newObj)
