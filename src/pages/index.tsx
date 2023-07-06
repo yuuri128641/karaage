@@ -10,7 +10,7 @@ type Props = {
   jobDates: JobHistory[];
 };
 
-export const getJobProps = async () => {
+export const getStaticProps = async () => {
   const jobDates = await client.get({
     endpoint: "jobhistory?orders=startDate",
   });
