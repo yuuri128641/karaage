@@ -6,7 +6,11 @@ import { client } from "@/utils/client";
 import { createJobHistoryFormatDate } from "@/utils/createJobHistoryFormatDate";
 import { JobHistory, JobHistoryFormat } from "@/models"
 
-export const getStaticProps = async () => {
+type Props = {
+  jobDates: JobHistory[];
+};
+
+export const getJobProps = async () => {
   const jobDates = await client.get({
     endpoint: "jobhistory?orders=startDate",
   });
@@ -27,20 +31,14 @@ const Wrap = styled.div`
   padding-bottom: 700px;
 `;
 
-type Props = {
-  jobDates: JobHistory[];
-};
-
 const Home: NextPage<Props> = ({jobDates}) => {
-  const titleTag = "p"
-
   const jobDate:JobHistoryFormat[] | undefined = createJobHistoryFormatDate(jobDates)
 
   return (
     <>
       <main>
         <div>
-          <Title as={titleTag}>めいんこんてんつ& ダミーデータ</Title>
+          <Title>めいんこんてんつ& ダミーデータ</Title>
           <Wrap>
             {jobDate && jobDate.map((item:any, index:number) => (
               <div key={index}>
