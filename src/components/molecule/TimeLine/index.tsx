@@ -1,5 +1,5 @@
 import React, { useState, useEffect , useRef} from "react"
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { colorPalette } from "@/styles/const/color"
 import { createDurationDate } from "@/utils/createDurationDate"
 import { FIRST_WORKING_DATE } from "site.config"
@@ -17,7 +17,7 @@ const TimeLineWrap = styled.div<{isOpen: boolean}>`
     background-color: ${colorPalette.lightGray100};
     position: fixed;
     box-shadow: 0px 0px 20px -8px #bababa;
-    bottom: ${({ isOpen }) =>  isOpen ? "-300px": "0" }; 
+    bottom: ${({ isOpen }) =>  isOpen ? "0" : "-300px" }; 
     transition: all 0.3s ease;
 `;
 
@@ -56,7 +56,7 @@ const TimeLineButton = styled.button<{isOpen: boolean}>`
         border-style: solid;
         border-width: 8px 8px 0 8px;
         border-color: ${colorPalette.lightGray1000} transparent transparent transparent;
-        transform: ${({ isOpen }) =>  isOpen ? "rotate(180deg)" : "rotate(0)" }; 
+        transform: ${({ isOpen }) =>  isOpen ? "rotate(0)" : "rotate(180deg)" }; 
         transition: all 0.3s ease;
     }
 `;
@@ -156,11 +156,84 @@ const TagItem = styled.span`
     border: 1px solid ${colorPalette.blue400};
 ` 
 
+const flash = keyframes`
+    0% {
+        opacity: .5;
+    }
+
+    50% {
+        opacity: 0;
+    }
+    
+    
+    100% {
+        opacity: .5;
+    }
+`
+
+const NavigationLeft = styled.div<{
+    isOpen: boolean,
+    isActive: boolean,
+}>`
+    width: 40px;
+    height: 300px;
+    position: fixed;
+    left: 0;
+    bottom: ${({ isOpen }) =>  isOpen ? "0" : "-300px" };
+    opacity: ${({ isActive }) =>  isActive ? 1 : 0 };
+    transition: all 0.3s ease;
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 50px 20px 50px 0;
+        border-color: transparent ${colorPalette.lightGray600} transparent transparent;
+        animation: ${flash} 1.5s ease-in-out infinite;
+    }
+` 
+
+const NavigationRight = styled.div<{
+    isOpen: boolean,
+    isActive: boolean,
+}>`
+    width: 40px;
+    height: 300px;
+    position: fixed;
+    right: 0;
+    bottom: ${({ isOpen }) =>  isOpen ? "0" : "-300px" }; 
+    transition: all 0.3s ease;
+    opacity: ${({ isActive }) =>  isActive ? 1 : 0 };
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 50px 0 50px 20px;
+        border-color: transparent transparent transparent ${colorPalette.lightGray600};
+        animation: ${flash} 1.5s ease-in-out infinite;
+    }
+` 
+
 export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
     const startDate = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
     const tadyDate = new Date()
     const durationDates = createDurationDate(startDate, tadyDate)
-    const timelineRef = useRef<HTMLDivElement>(null);;
+    const timelineEndRef = useRef<HTMLDivElement>(null)
+    const timelineWrapRef = useRef<HTMLDivElement>(null)
+    const dataRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(true)
 
     const toggleTimeline = () => setOpen(!open)
@@ -176,12 +249,34 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
         return newYear;
     }
 
+    const [scrollStartPosition, setScrollStartPosition] = useState(true)
+    const [scrollEndPosition, setScrollEndPosition] = useState(false)
+
     useEffect(()=>{
-        timelineRef?.current?.scrollIntoView({
+        // 初期表示時にスクロール位置を現在に変更
+        timelineEndRef?.current?.scrollIntoView({
             inline: "end"
         });
-    }, [])  
 
+        const endPosition:number | undefined = dataRef?.current?.getBoundingClientRect().x
+
+        // スクロールナビゲーションの切り替え
+        const handleScroll = (clientRect:any) => {
+            if(clientRect.scrollLeft === 0) {
+                setScrollStartPosition(false)
+            } else if (clientRect.scrollLeft === (endPosition && Math.abs(endPosition))) {
+                setScrollEndPosition(false)
+            } else {
+                setScrollStartPosition(true)
+                setScrollEndPosition(true)
+            }
+        }
+
+        const scrollArea = timelineWrapRef.current;
+        scrollArea?.addEventListener("scroll", () =>{
+            handleScroll(scrollArea)
+        })
+    }, [])
 
     return (
         <TimeLineWrap isOpen={open}>
@@ -189,10 +284,10 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                 onClick={toggleTimeline}
                 isOpen={open}
             >
-                {open ? "OPEN" : "CLOSE"} JobHistory
+                {open ? "CLOSE" : "OPEN" } JobHistory
             </TimeLineButton>
-            <ScrollArea isOpen={open}>
-                <DateWap>
+            <ScrollArea isOpen={open} ref={timelineWrapRef}>
+                <DateWap ref={dataRef}>
                     {durationDates.map((item, index:number) => (
                         <DateItem key="index" isJanuary={changeYear(index)}>
                             {changeYear(index) &&
@@ -221,8 +316,10 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                             </ProjectItem>
                         ))}
                     </ProjectArea>
-                    <div ref={timelineRef} />
+                    <div ref={timelineEndRef} />
                 </DateWap>
+                <NavigationLeft isOpen={open} isActive={scrollStartPosition} />
+                <NavigationRight isOpen={open} isActive={scrollEndPosition} />
             </ScrollArea>
         </TimeLineWrap>
     );
