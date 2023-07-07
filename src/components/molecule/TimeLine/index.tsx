@@ -227,6 +227,56 @@ const NavigationRight = styled.div<{
     }
 ` 
 
+const Information = styled.div<{isOpen: boolean}>`
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: 1px solid ${colorPalette.blue400};
+    box-sizing: border-box;
+    padding: 12px;
+    max-width: calc(100% -40px);
+    display: flex;
+    border-radius: ${({ isOpen }) =>  isOpen ? "0" : "9999px"};
+`
+
+const InformationText = styled.p<{isOpen: boolean}>`
+    font-size: 12px;
+    line-height: 1.6;
+    visibility: ${({ isOpen }) =>  isOpen ? "visible": "hidden"};
+    position: ${({ isOpen }) =>  isOpen ? "relative" : "absolute"};
+`
+
+const InformationButton = styled.button<{isOpen: boolean}>`
+    border: none;
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    position: relative;
+    cursor: pointer;
+    &::before,
+    &::after {
+        content: "";
+        width: 100%;
+        height: 4px;
+        background-color: ${colorPalette.blue400};
+        position: absolute;
+        display: block;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        transition: all 0.3s ease;
+    }
+    &::before {
+        transform:  ${({ isOpen }) =>  isOpen ? "rotate(45deg)" : "rotate(90deg)" }; 
+    }
+    &::after {
+        transform:  ${({ isOpen }) =>  isOpen ? "rotate(-45deg)" : "rotate(0)" }; 
+    }
+`
+
 export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
     const startDate = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
     const tadyDate = new Date()
@@ -235,8 +285,12 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
     const timelineWrapRef = useRef<HTMLDivElement>(null)
     const dataRef = useRef<HTMLDivElement>(null)
     const [open, setOpen] = useState(true)
+    const [scrollStartPosition, setScrollStartPosition] = useState(true)
+    const [scrollEndPosition, setScrollEndPosition] = useState(false)
+    const [navigation, setNavigation] = useState(true)
 
     const toggleTimeline = () => setOpen(!open)
+    const toggleNavigation = () => setNavigation(!navigation)
 
     // 年度判定
     const changeYear = (index:number) => {
@@ -248,9 +302,6 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
         const newYear:boolean =  durationDates[index-1].year !== durationDates[index].year // 年度改
         return newYear;
     }
-
-    const [scrollStartPosition, setScrollStartPosition] = useState(true)
-    const [scrollEndPosition, setScrollEndPosition] = useState(false)
 
     useEffect(()=>{
         // 初期表示時にスクロール位置を現在に変更
@@ -321,6 +372,16 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                 <NavigationLeft isOpen={open} isActive={scrollStartPosition} />
                 <NavigationRight isOpen={open} isActive={scrollEndPosition} />
             </ScrollArea>
+            <Information isOpen={navigation}>
+                <InformationText isOpen={navigation}>
+                    職務経歴書は右上のボタンで開閉できます。<br/>
+                    各タイムラインをクリックすることで詳細な職務経歴の閲覧が可能です。
+                </InformationText>
+                <InformationButton
+                    isOpen={navigation}
+                    onClick={toggleNavigation}
+                />
+            </Information>
         </TimeLineWrap>
     );
 };
