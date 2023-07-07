@@ -245,7 +245,7 @@ const Information = styled.div<{isOpen: boolean}>`
     border-radius: ${({ isOpen }) =>  isOpen ? "0" : "9999px"};
 `
 
-const InformationText = styled.p<{isOpen: boolean}>`
+const InformationText = styled.div<{isOpen: boolean}>`
     font-size: 12px;
     line-height: 1.6;
     visibility: ${({ isOpen }) =>  isOpen ? "visible": "hidden"};
