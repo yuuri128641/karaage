@@ -4,6 +4,7 @@ import { colorPalette } from "@/styles/const/color"
 import { createDurationDate } from "@/utils/createDurationDate"
 import { FIRST_WORKING_DATE } from "site.config"
 import { JobHistoryFormat } from "@/models"
+import { mediaQuery } from "@/styles/const/size"
 
 type TimeLineProps = {
     jobDate?: JobHistoryFormat[];
@@ -46,9 +47,6 @@ const TimeLineButton = styled.button<{isOpen: boolean}>`
     align-items: center;
     justify-content: center;
     gap: 12px;
-    &:hover {
-        opacity: 0.7;
-    }
     &::after {
         content: "";
         width: 0;
@@ -58,6 +56,12 @@ const TimeLineButton = styled.button<{isOpen: boolean}>`
         border-color: ${colorPalette.lightGray1000} transparent transparent transparent;
         transform: ${({ isOpen }) =>  isOpen ? "rotate(0)" : "rotate(180deg)" }; 
         transition: all 0.3s ease;
+    }
+    ${mediaQuery.lg} {
+        &:hover {
+            opacity: .7;
+
+        }
     }
 `;
 
@@ -235,8 +239,9 @@ const Information = styled.div<{isOpen: boolean}>`
     border: 1px solid ${colorPalette.blue400};
     box-sizing: border-box;
     padding: 12px;
-    max-width: calc(100% -40px);
-    display: flex;
+    max-width: calc(100% - 40px);
+    width: ${({ isOpen }) =>  isOpen ? "auto" : "58px"};
+    display: inline-flex;
     border-radius: ${({ isOpen }) =>  isOpen ? "0" : "9999px"};
 `
 
@@ -275,6 +280,60 @@ const InformationButton = styled.button<{isOpen: boolean}>`
     &::after {
         transform:  ${({ isOpen }) =>  isOpen ? "rotate(-45deg)" : "rotate(0)" }; 
     }
+`
+const InformationTagWrap = styled.div`
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+`
+const InformationTagDev = styled.div`
+    background-color: ${colorPalette.blue200};
+    color: ${colorPalette.white};
+    display: inline-flex;
+    padding: 2px 4px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+`
+
+const InformationTagDes = styled.div`
+    background-color: ${colorPalette.jobDes};
+    color: ${colorPalette.white};
+    display: inline-flex;
+    padding: 2px 4px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+`
+
+const InformationTagDir = styled.div`
+    background-color: ${colorPalette.jobDir};
+    color: ${colorPalette.white};
+    display: inline-flex;
+    padding: 2px 4px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+`
+
+const InformationTagAll = styled.div`
+    background-color: ${colorPalette.jobAll};
+    color: ${colorPalette.white};
+    display: inline-flex;
+    padding: 2px 4px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+`
+
+const InformationTagOther = styled.div`
+    background-color: ${colorPalette.jobOther};
+    color: ${colorPalette.white};
+    display: inline-flex;
+    padding: 2px 4px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
 `
 
 export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
@@ -376,6 +435,13 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                 <InformationText isOpen={navigation}>
                     職務経歴書は右上のボタンで開閉できます。<br/>
                     各タイムラインをクリックすることで詳細な職務経歴の閲覧が可能です。
+                    <InformationTagWrap>
+                        <InformationTagDev>開発</InformationTagDev>
+                        <InformationTagDes>デザイン</InformationTagDes>
+                        <InformationTagDir>企画</InformationTagDir>
+                        <InformationTagAll>全工程</InformationTagAll>
+                        <InformationTagOther>その他</InformationTagOther>
+                    </InformationTagWrap>
                 </InformationText>
                 <InformationButton
                     isOpen={navigation}
