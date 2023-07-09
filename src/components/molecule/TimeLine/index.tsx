@@ -236,7 +236,7 @@ const Information = styled.div<{isOpen: boolean}>`
     bottom: 20px;
     left: 20px;
     background-color: rgba(255, 255, 255, 0.7);
-    border: 1px solid ${colorPalette.blue400};
+    border: 1px solid ${colorPalette.lightGray600};
     box-sizing: border-box;
     padding: 12px;
     max-width: calc(100% - 40px);
@@ -259,12 +259,14 @@ const InformationButton = styled.button<{isOpen: boolean}>`
     height: 32px;
     position: relative;
     cursor: pointer;
+    transition: all 0.3s ease;
+    transform:  ${({ isOpen }) =>  isOpen ? "rotate(45deg)" : "rotate(90deg)" }; 
     &::before,
     &::after {
         content: "";
         width: 100%;
         height: 4px;
-        background-color: ${colorPalette.blue400};
+        background-color: ${colorPalette.lightGray600};
         position: absolute;
         display: block;
         right: 0;
@@ -272,13 +274,13 @@ const InformationButton = styled.button<{isOpen: boolean}>`
         top: 0;
         bottom: 0;
         margin: auto;
-        transition: all 0.3s ease;
     }
+    
     &::before {
-        transform:  ${({ isOpen }) =>  isOpen ? "rotate(45deg)" : "rotate(90deg)" }; 
+        transform: rotate(90deg);
     }
     &::after {
-        transform:  ${({ isOpen }) =>  isOpen ? "rotate(-45deg)" : "rotate(0)" }; 
+        transform: rotate(0);
     }
 `
 const InformationTagWrap = styled.div`
