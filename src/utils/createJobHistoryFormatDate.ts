@@ -13,13 +13,22 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
         let duplicationIndex = 0;
 
         const startDate:Date = new Date(item.startDate);
-        const endDate:Date = new Date(item.endDate);
         const firstJobDate:Date = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
         const startMonth:number = startDate.getFullYear() * 12 + startDate.getMonth() + 1;
         const firstJobMonth:number = firstJobDate.getFullYear() * 12 + firstJobDate.getMonth();
 
+        console.log(item.title);
+        if(item.endDate) {
+            console.log("true")
+        } else {
+            console.log("false")
+        }
+
+        console.log("todyDate" + todyDate)
         // 終了日が設定されていたら期間を設定
         if (item.endDate) {
+            console.log("せってい")
+            const endDate:Date = new Date(item.endDate);
             endMonth = endDate.getFullYear() * 12 + endDate.getMonth() + 1;
         }
         
@@ -32,6 +41,9 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
             })
         }
 
+        console.log(endMonth)
+        console.log(startMonth)
+
         const newObj = {
             ...item, 
             duplicationEventLength: duplicationIndex,
@@ -39,6 +51,8 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
             jobStartTime: startMonth - firstJobMonth,
         };
         
+
+        console.log(newObj)
         newBlogList.push(newObj)
         viewedEventList.push(startMonth - firstJobMonth + startMonth - firstJobMonth)
     })
