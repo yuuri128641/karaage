@@ -13,7 +13,7 @@ const StyledSampleTitle = styled.h3`
     font-size: 60px;
     font-weight: 700;
     background-color: #999;
-    ${mediaQuery.lg} {
+    ${mediaQuery.pc} {
         font-size: 60px;
         background-color: #666;
         color: #fff;

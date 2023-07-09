@@ -20,6 +20,7 @@ const TimeLineWrap = styled.div<{isOpen: boolean}>`
     box-shadow: 0px 0px 20px -8px #bababa;
     bottom: ${({ isOpen }) =>  isOpen ? "0" : "-300px" }; 
     transition: all 0.3s ease;
+    z-index: 2000;
 `;
 
 const ScrollArea = styled.div<{isOpen: boolean}>`
@@ -57,7 +58,7 @@ const TimeLineButton = styled.button<{isOpen: boolean}>`
         transform: ${({ isOpen }) =>  isOpen ? "rotate(0)" : "rotate(180deg)" }; 
         transition: all 0.3s ease;
     }
-    ${mediaQuery.lg} {
+    ${mediaQuery.pc} {
         &:hover {
             opacity: .7;
 

@@ -5,7 +5,6 @@ import { TimeLine } from "@/components/molecule/TimeLine"
 import { client } from "@/utils/client";
 import { createJobHistoryFormatDate } from "@/utils/createJobHistoryFormatDate";
 import { JobHistory, JobHistoryFormat } from "@/models"
-import { Header } from "@/components/molecule/Header"
 import Link from "next/link";
 import { mediaQuery } from "@/styles/const/size"
 import { colorPalette } from "@/styles/const/color"
@@ -27,7 +26,7 @@ export const getStaticProps = async () => {
 };
 
 const Wrap = styled.div`
-  ${mediaQuery.lg} {
+  ${mediaQuery.pc} {
     padding-left: 320px;
     padding-top: 80px;
   }
@@ -48,7 +47,6 @@ const Home: NextPage<Props> = ({jobDates}) => {
   return (
     <>
       <main>
-        <Header />
         <Wrap>
           <DesignText>FRONTEND DEVELOPER</DesignText>
           {jobDate && jobDate.map((item:any, index:number) => (
