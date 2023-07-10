@@ -15,12 +15,10 @@ type Props = {
 
 export const Profile: React.FC<any>= ({profile: profile}) => {
 
-    console.log(profile)
-
     return (
         <>
         <div>ぷろふぃ</div>
-        {profile}
+        {profile.closeName}
         </>
     );
 }

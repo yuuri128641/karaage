@@ -10,7 +10,6 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
     date?.map((item:any) => {
         let duplicationIndex = 0;
         const duplicationList:number[] = new Array<number>(date.length).fill(0)
-        console.log(duplicationList)
         
         // 終了日が未設定・未来日の場合は現在の日付を設定
         let endMonth = todayMonth;

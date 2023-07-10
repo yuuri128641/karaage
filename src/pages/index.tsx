@@ -55,12 +55,11 @@ const DesignText = styled.div`
 const Home: NextPage<Props> = ({jobDates, profileDate}) => {
   const jobDate:JobHistoryFormat[] | undefined = createJobHistoryFormatDate(jobDates)
 
-  console.log(jobDate)
-
   return (
     <>
       <main>
         <Wrap>
+          <Profile profile={profileDate} />
 
           <DesignText>FRONTEND DEVELOPER</DesignText>
           {jobDate && jobDate.map((item:any, index:number) => (
