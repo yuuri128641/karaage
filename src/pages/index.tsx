@@ -8,19 +8,30 @@ import { JobHistory, JobHistoryFormat } from "@/models"
 import Link from "next/link";
 import { mediaQuery } from "@/styles/const/size"
 import { colorPalette } from "@/styles/const/color"
+import { Profile } from "@/components/organisms/Profile"
 
 type Props = {
-  jobDates: JobHistory[];
+  jobDates: JobHistory[]
+  profileDate: any
 };
 
 export const getStaticProps = async () => {
   const jobDates = await client.get({
-    endpoint: "jobhistory?orders=startDate",
+    endpoint: "jobhistory",
+    queries: {
+      offset: 0,
+      limit: 1000,
+      orders: "startDate",
+    }
   });
+  const profileDate = await client.get({
+    endpoint: "profile",
+});
 
   return {
     props: {
       jobDates: jobDates.contents,
+      profileDate: profileDate,
     },
   };
 };
@@ -41,13 +52,16 @@ const DesignText = styled.div`
   letter-spacing: -0.1em;
   color: ${colorPalette.lightGray100};
 `
-const Home: NextPage<Props> = ({jobDates}) => {
+const Home: NextPage<Props> = ({jobDates, profileDate}) => {
   const jobDate:JobHistoryFormat[] | undefined = createJobHistoryFormatDate(jobDates)
+
+  console.log(jobDate)
 
   return (
     <>
       <main>
         <Wrap>
+
           <DesignText>FRONTEND DEVELOPER</DesignText>
           {jobDate && jobDate.map((item:any, index:number) => (
             <div key={index}>

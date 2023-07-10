@@ -10,16 +10,12 @@ const HeaderStyle = styled.div`
     left: 0;
     z-index: 1000;
     height: 100%;
-    /*${mediaQuery.underPc} {
-        width: 100%;
-    }*/
 `
 
 const Title = styled.h1`
     font-size: 20px;
     letter-spacing: 0.4em;
     background-color: ${colorPalette.blue400};
-    //background-color: rgba(255, 255, 255, 1);
     padding: 0 20px;
     height: 60px;
     color: ${colorPalette.white};
@@ -128,7 +124,7 @@ export const Header: React.FC = () => {
     const toggleTimeline = () => setOpen(!open)
     return (
         <HeaderStyle>
-            <Title><TitleName>YUURI SUZUKI</TitleName>PORTFOLIO</Title>
+            <Title><TitleName>annris</TitleName>PORTFOLIO</Title>
             <Button
                 onClick={toggleTimeline}
                 isOpen={open}
@@ -139,7 +135,7 @@ export const Header: React.FC = () => {
             </Button>
             <LinkWrap isOpen={open}>
                 <LinkItem>
-                    <Link href="">PROFILE</Link>
+                    <Link href="/profile">PROFILE</Link>
                 </LinkItem>
                 <LinkItem>
                     <Link href="">RESUME</Link>

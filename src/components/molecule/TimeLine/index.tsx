@@ -423,9 +423,9 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                                 <ProjectTitle>
                                     {job.title}
                                 </ProjectTitle>
-                                {job.projectDurationLength !== 1 &&
+                                {/*job.projectDurationLength !== 1 &&
                                     <TagItem>Next.js</TagItem>
-                                }
+                                */}
                             </ProjectItem>
                         ))}
                     </ProjectArea>
