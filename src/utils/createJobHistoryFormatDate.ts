@@ -9,7 +9,8 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
 
     date?.map((item:any) => {
         let duplicationIndex = 0;
-        const duplicationList:any = [0,0,0,0,0,0,0,0,0,0,];
+        const duplicationList:number[] = new Array<number>(date.length).fill(0)
+        console.log(duplicationList)
         
         // 終了日が未設定・未来日の場合は現在の日付を設定
         let endMonth = todayMonth;
@@ -28,11 +29,10 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
 
         // 先に開始した業務が存在する場合
         if (viewedEventList.length) {
-            viewedEventList.forEach((elem) => {
-                if(startMonth <= elem[1]) {
+            viewedEventList.forEach((elem:number[]) => {
+                if(startMonth <= elem[0]) {
                     duplicationIndex++;
-                    duplicationList[elem[2]] =  1;
-
+                    duplicationList[elem[1]] =  1;
                 }
             })
         }
@@ -47,7 +47,7 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
         };
 
         newBlogList.push(newObj)
-        viewedEventList.unshift([startMonth, endMonth, duplicationIndex] )
+        viewedEventList.unshift([endMonth, duplicationIndex] )
     })
 
     return newBlogList
