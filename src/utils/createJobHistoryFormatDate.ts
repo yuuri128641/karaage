@@ -26,54 +26,18 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
             endMonth = endDate.getFullYear() * 12 + endDate.getMonth() + 1;
         }
 
-        /*
-        console.log("startMonth" + startMonth)
-        console.log("endDate" + endDate)*/
-        
         // 先に開始した業務が存在する場合
         if (viewedEventList.length) {
-            /*
-            viewedEventList.reduceRight((i:void, viewedEventItem:number[]) => {
-                console.log("endDate" + viewedEventItem[1])
-                if(startMonth < viewedEventItem[1] || startMonth === viewedEventItem[0] ) {
-                    duplicationIndex++;
-                }  
-            })
-            */
-
-            console.log(item.title)
-
-            viewedEventList.forEach((elem, index) => {
+            viewedEventList.forEach((elem) => {
                 if(startMonth <= elem[1]) {
-                    
                     duplicationIndex++;
-
                     duplicationList[elem[2]] =  1;
 
-
-                    if(index <= elem[2]) {
-                        console.log("currentDuplicationIndex " + duplicationIndex)
-                        console.log("startMonth " + startMonth)
-                        console.log("elmstartMonth " + elem[0])
-                        console.log("elmendDate " + elem[1])
-                        console.log("duplicationIndex " + elem[2])
-                        console.log("")
-                        //duplicationIndex = duplicationIndex - 1;
-                    }
                 }
-                
-                /*if(startMonth < elem[1] && duplicationIndex < elem[2]) {
-                    duplicationIndex--;
-                }*/
             })
         }
 
-        console.log(duplicationList)
-        console.log("なんばんめ" + duplicationList.indexOf(0))
-
         duplicationIndex = duplicationList.indexOf(0)
-
-        //duplicationList
 
         const newObj = {
             ...item, 
@@ -83,7 +47,6 @@ export const createJobHistoryFormatDate = (date:JobHistory[]) => {
         };
 
         newBlogList.push(newObj)
-        //viewedEventList.push(startMonth - firstJobMonth + startMonth - firstJobMonth)
         viewedEventList.unshift([startMonth, endMonth, duplicationIndex] )
     })
 
