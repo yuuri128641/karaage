@@ -7,5 +7,6 @@ const breakPoint = {
 export const mediaQuery = {
   xs: `${mediaDeclaration} (min-width: ${breakPoint.sm}px)`,
   sm: `${mediaDeclaration} (min-width: ${breakPoint.md}px)`,
-  lg: `${mediaDeclaration} (min-width: ${breakPoint.lg}px)`,
+  underPc: `${mediaDeclaration} (max-width: ${breakPoint.md}px)`,
+  pc: `${mediaDeclaration} (min-width: ${breakPoint.md + 1}px)`,
 };
