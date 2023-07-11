@@ -55,7 +55,6 @@ const CompanyDate = styled.span`
     width: 200px;
 `
 
-
 export const ProfileContents: React.FC<Props>= ({ profile }) => {
     return (
         <>

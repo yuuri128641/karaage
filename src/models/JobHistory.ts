@@ -1,3 +1,7 @@
+export type BusinessContent = {
+    title: string
+    contents: string
+}
 
 export type JobHistory = {
     id: string
@@ -8,6 +12,16 @@ export type JobHistory = {
     title: string
     endDate: string
     startDate: string
+    historyCategory: string
+    jobCategory: string
+    inChangeOf: string
+    role: string
+    technology: string
+    structure: string
+    businessContent: string
+    achievement: BusinessContent[]
+    result: string
+    tag: string
 }
 
 export type JobHistoryFormat = {
@@ -22,4 +36,14 @@ export type JobHistoryFormat = {
     duplicationEventLength: number
     projectDurationLength: number
     jobStartTime: number
+    historyCategory: string
+    jobCategory: string
+    inChangeOf: string
+    role: string
+    technology: string
+    structure: string
+    businessContent: string
+    achievement: BusinessContent[]
+    result: string
+    tag: string
 }

@@ -4,6 +4,12 @@ import Link from "next/link";
 import { colorPalette } from "@/styles/const/color"
 import { mediaQuery } from "@/styles/const/size"
 
+type HeaderProps = {
+    setJob: any
+    maxJobLength: number
+    setContent: any
+};
+
 const HeaderStyle = styled.div`
     position: fixed;
     top: 0;
@@ -15,6 +21,10 @@ const HeaderStyle = styled.div`
 `
 
 const Title = styled.h1`
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
     font-size: 20px;
     letter-spacing: 0.4em;
     background-color: ${colorPalette.blue400};
@@ -90,14 +100,15 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
     letter-spacing: 0.4em;
     flex-flow: column;
     padding: 0 20px;
+    position: fixed;
     ${mediaQuery.pc} {
         padding-top: 20px;
+        top: 60px;
     }
     ${mediaQuery.underPc} {
         height: 100%;
         box-sizing: border-box;
         right: ${({ isOpen }) =>  isOpen ? "-220px" : 0 }; 
-        position: fixed;
         width: 220px;
         text-align: right;
         top: 0;
@@ -108,22 +119,24 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
 `;
 
 const LinkItem = styled.div`
+    color: ${colorPalette.blue400};
+    cursor: pointer;
     & a {
         color: ${colorPalette.blue400};
         text-decoration: none;
-        ${mediaQuery.pc} {
-            &:hover {
-                opacity: 0.7;
-            }
+    }
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
         }
     }
 `;
 
-export const Header: React.FC = () => {
+export const Header: React.FC<HeaderProps> = ({ setJob, maxJobLength, setContent }) => {
     const [open, setOpen] = useState(true)
     const toggleTimeline = () => setOpen(!open)
     return (
-        <HeaderStyle>
+        <>
             <Title><TitleName>annris</TitleName>PORTFOLIO</Title>
             <Button
                 onClick={toggleTimeline}
@@ -134,15 +147,30 @@ export const Header: React.FC = () => {
                 <ButtonLine isOpen={open} />
             </Button>
             <LinkWrap isOpen={open}>
-                <LinkItem>
-                    <Link href="/profile">PROFILE</Link>
+                <LinkItem
+                    onClick={() => {
+                        setJob()
+                        setContent("profile")
+                    }}
+                >
+                    PROFILE
                 </LinkItem>
-                <LinkItem>
-                    <Link href="">RESUME</Link>
+                <LinkItem
+                    onClick={() => {
+                        setJob(maxJobLength)
+                        setContent()
+                    }}
+                >
+                    RESUME
                 </LinkItem>
-                <LinkItem>
-                    <Link href="">WORKS</Link>
-                </LinkItem>
+                {/* <LinkItem
+                    onClick={() => {
+                        setJob()
+                        setContent("works")
+                    }}
+                >
+                    WORKS
+                </LinkItem> */}
                 <LinkItem>
                     <a 
                         href="https://github.com/yuuri128641"
@@ -153,6 +181,6 @@ export const Header: React.FC = () => {
                     </a>
                 </LinkItem>
             </LinkWrap>
-        </HeaderStyle>
+        </>
     );
 }

@@ -7,7 +7,9 @@ import { JobHistoryFormat } from "@/models"
 import { mediaQuery } from "@/styles/const/size"
 
 type TimeLineProps = {
-    jobDate?: JobHistoryFormat[];
+    jobDate?: JobHistoryFormat[]
+    setJob?: any
+    setContent?: any
 };
 
 const MONTH_WIDTH = 40;
@@ -138,6 +140,7 @@ const ProjectItem = styled.div<{
     border-radius: 4px;
     align-items: center;
     gap: 4px;
+    cursor: pointer;
 ` 
 
 const ProjectTitle = styled.div`
@@ -339,7 +342,7 @@ const InformationTagOther = styled.div`
     justify-content: center;
 `
 
-export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
+export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent }) => {
     const startDate = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
     const tadyDate = new Date()
     const durationDates = createDurationDate(startDate, tadyDate)
@@ -419,13 +422,17 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate  }) => {
                                 startPositionLength={job.jobStartTime}
                                 duplicationEventLength={job.duplicationEventLength}
                                 key={index}
+                                onClick={() => {
+                                    setJob(index)
+                                    setContent()
+                                }}
                             >
                                 <ProjectTitle>
                                     {job.title}
                                 </ProjectTitle>
-                                {/*job.projectDurationLength !== 1 &&
-                                    <TagItem>Next.js</TagItem>
-                                */}
+                                {job.projectDurationLength !== 0 && job.tag &&
+                                    <TagItem>{job.tag}</TagItem>
+                                }
                             </ProjectItem>
                         ))}
                     </ProjectArea>
