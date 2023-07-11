@@ -1,5 +1,5 @@
 import React, { useState, useEffect , useRef} from "react"
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { colorPalette } from "@/styles/const/color"
 import { createDurationDate } from "@/utils/createDurationDate"
 import { FIRST_WORKING_DATE } from "site.config"
@@ -10,6 +10,28 @@ type TimeLineProps = {
     jobDate?: JobHistoryFormat[]
     setJob?: any
     setContent?: any
+};
+
+type optionsProps = {
+    backgroundColor: string;
+};
+
+const options: Record<string, optionsProps> = {
+    develop: {
+        backgroundColor: colorPalette.blue200,
+    },
+    design: {
+        backgroundColor: colorPalette.jobDes,
+    },
+    direction: {
+        backgroundColor: colorPalette.jobDir,
+    },
+    all: {
+        backgroundColor: colorPalette.jobAll,
+    },
+    other: {
+        backgroundColor: colorPalette.jobOther,
+    },
 };
 
 const MONTH_WIDTH = 40;
@@ -124,10 +146,10 @@ const ProjectItem = styled.div<{
     durationLength: number
     startPositionLength: number
     duplicationEventLength: number
+    themeStyle: optionsProps
 }>`
     width: ${({ durationLength }) =>  durationLength && (durationLength +1) * MONTH_WIDTH - 2 }px;
     height: 40px;
-    background-color: ${colorPalette.blue200};
     color: ${colorPalette.white};
     display: flex;
     line-height: 1;
@@ -141,6 +163,8 @@ const ProjectItem = styled.div<{
     align-items: center;
     gap: 4px;
     cursor: pointer;
+    background-color: ${({ themeStyle }: { themeStyle: optionsProps }) => themeStyle.backgroundColor};
+
 ` 
 
 const ProjectTitle = styled.div`
@@ -287,11 +311,13 @@ const InformationButton = styled.button<{isOpen: boolean}>`
         transform: rotate(0);
     }
 `
+
 const InformationTagWrap = styled.div`
     display: flex;
     gap: 8px;
     margin-top: 4px;
 `
+
 const InformationTagDev = styled.div`
     background-color: ${colorPalette.blue200};
     color: ${colorPalette.white};
@@ -422,6 +448,7 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent 
                                 startPositionLength={job.jobStartTime}
                                 duplicationEventLength={job.duplicationEventLength}
                                 key={index}
+                                themeStyle={options[job.jobCategory]}
                                 onClick={() => {
                                     setJob(index)
                                     setContent()
@@ -434,6 +461,7 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent 
                                     <TagItem>{job.tag}</TagItem>
                                 }
                             </ProjectItem>
+
                         ))}
                     </ProjectArea>
                     <div ref={timelineEndRef} />

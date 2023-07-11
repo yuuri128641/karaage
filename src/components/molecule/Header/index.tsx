@@ -10,16 +10,6 @@ type HeaderProps = {
     setContent: any
 };
 
-const HeaderStyle = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    ${mediaQuery.underPc} {
-        height: 100%;
-    }
-`
-
 const Title = styled.h1`
     position: fixed;
     top: 0;
