@@ -1,6 +1,5 @@
 import React from "react";
-import styled, {keyframes} from "styled-components";
-import { colorPalette } from "@/styles/const/color"
+import styled from "styled-components";
 import { Profile } from "@/models"
 import { PageTitle } from "@/components/atoms/PageTitle"
 import { SkillList } from "@/components/molecule/SkillList"

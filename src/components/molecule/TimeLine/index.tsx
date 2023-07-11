@@ -1,5 +1,5 @@
 import React, { useState, useEffect , useRef} from "react"
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { colorPalette } from "@/styles/const/color"
 import { createDurationDate } from "@/utils/createDurationDate"
 import { FIRST_WORKING_DATE } from "site.config"
@@ -10,27 +10,34 @@ type TimeLineProps = {
     jobDate?: JobHistoryFormat[]
     setJob?: any
     setContent?: any
+    jobIndex?: number
 };
 
 type optionsProps = {
-    backgroundColor: string;
+    backgroundColor: string
+    borderColor: string
 };
 
 const options: Record<string, optionsProps> = {
     develop: {
         backgroundColor: colorPalette.blue200,
+        borderColor: colorPalette.blue400,
     },
     design: {
-        backgroundColor: colorPalette.jobDes,
+        backgroundColor: colorPalette.jobDes200,
+        borderColor: colorPalette.jobDes400,
     },
     direction: {
-        backgroundColor: colorPalette.jobDir,
+        backgroundColor: colorPalette.jobDir200,
+        borderColor: colorPalette.jobDir400,
     },
     all: {
-        backgroundColor: colorPalette.jobAll,
+        backgroundColor: colorPalette.jobAll200,
+        borderColor: colorPalette.jobAll400,
     },
     other: {
-        backgroundColor: colorPalette.jobOther,
+        backgroundColor: colorPalette.jobOther200,
+        borderColor: colorPalette.jobOther400,
     },
 };
 
@@ -84,8 +91,11 @@ const TimeLineButton = styled.button<{isOpen: boolean}>`
     }
     ${mediaQuery.pc} {
         &:hover {
-            opacity: .7;
-
+            color: ${colorPalette.lightGray600};
+            border-top: 4px solid ${colorPalette.lightGray600};
+            &::after {
+                border-color: ${colorPalette.lightGray600} transparent transparent transparent;
+            }
         }
     }
 `;
@@ -147,6 +157,7 @@ const ProjectItem = styled.div<{
     startPositionLength: number
     duplicationEventLength: number
     themeStyle: optionsProps
+    isActive: boolean
 }>`
     width: ${({ durationLength }) =>  durationLength && (durationLength +1) * MONTH_WIDTH - 2 }px;
     height: 40px;
@@ -163,8 +174,13 @@ const ProjectItem = styled.div<{
     align-items: center;
     gap: 4px;
     cursor: pointer;
-    background-color: ${({ themeStyle }: { themeStyle: optionsProps }) => themeStyle.backgroundColor};
-
+    transition: opacity 0.3s ease;
+    background-color: ${({ themeStyle, isActive }: { themeStyle: optionsProps, isActive: boolean }) => isActive ? themeStyle.borderColor : themeStyle.backgroundColor};
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 ` 
 
 const ProjectTitle = styled.div`
@@ -175,7 +191,7 @@ const ProjectTitle = styled.div`
     overflow: hidden;
 `
 
-const TagItem = styled.span`
+const TagItem = styled.span<{themeStyle: optionsProps}>`
     display: inline-flex;
     margin-right: 4px;
     height: 20px;
@@ -186,6 +202,7 @@ const TagItem = styled.span`
     font-size: 12px;
     padding: 0 2px;
     border: 1px solid ${colorPalette.blue400};
+    border: 1px solid ${({ themeStyle }: { themeStyle: optionsProps }) => themeStyle.borderColor};
 ` 
 
 const flash = keyframes`
@@ -288,7 +305,7 @@ const InformationButton = styled.button<{isOpen: boolean}>`
     position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
-    transform:  ${({ isOpen }) =>  isOpen ? "rotate(45deg)" : "rotate(90deg)" }; 
+    transform:  ${({ isOpen }) =>  isOpen ? "rotate(45deg)" : "rotate(90deg)" };
     &::before,
     &::after {
         content: "";
@@ -310,6 +327,11 @@ const InformationButton = styled.button<{isOpen: boolean}>`
     &::after {
         transform: rotate(0);
     }
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 `
 
 const InformationTagWrap = styled.div`
@@ -329,7 +351,7 @@ const InformationTagDev = styled.div`
 `
 
 const InformationTagDes = styled.div`
-    background-color: ${colorPalette.jobDes};
+    background-color: ${colorPalette.jobDes200};
     color: ${colorPalette.white};
     display: inline-flex;
     padding: 2px 4px;
@@ -339,7 +361,7 @@ const InformationTagDes = styled.div`
 `
 
 const InformationTagDir = styled.div`
-    background-color: ${colorPalette.jobDir};
+    background-color: ${colorPalette.jobDir200};
     color: ${colorPalette.white};
     display: inline-flex;
     padding: 2px 4px;
@@ -349,7 +371,7 @@ const InformationTagDir = styled.div`
 `
 
 const InformationTagAll = styled.div`
-    background-color: ${colorPalette.jobAll};
+    background-color: ${colorPalette.jobAll200};
     color: ${colorPalette.white};
     display: inline-flex;
     padding: 2px 4px;
@@ -359,7 +381,7 @@ const InformationTagAll = styled.div`
 `
 
 const InformationTagOther = styled.div`
-    background-color: ${colorPalette.jobOther};
+    background-color: ${colorPalette.jobOther200};
     color: ${colorPalette.white};
     display: inline-flex;
     padding: 2px 4px;
@@ -368,7 +390,7 @@ const InformationTagOther = styled.div`
     justify-content: center;
 `
 
-export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent }) => {
+export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent, jobIndex }) => {
     const startDate = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
     const tadyDate = new Date()
     const durationDates = createDurationDate(startDate, tadyDate)
@@ -453,12 +475,13 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent 
                                     setJob(index)
                                     setContent()
                                 }}
+                                isActive={index === jobIndex && true}
                             >
                                 <ProjectTitle>
                                     {job.title}
                                 </ProjectTitle>
                                 {job.projectDurationLength !== 0 && job.tag &&
-                                    <TagItem>{job.tag}</TagItem>
+                                    <TagItem themeStyle={options[job.jobCategory]}>{job.tag}</TagItem>
                                 }
                             </ProjectItem>
 

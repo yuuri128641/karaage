@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Link from "next/link";
 import { colorPalette } from "@/styles/const/color"
 import { mediaQuery } from "@/styles/const/size"
 

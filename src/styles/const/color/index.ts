@@ -22,10 +22,14 @@ export const colorPalette = {
   yellow400: "#e9be01",
   orange400: "#e94a01",
   black: "#00202f",
-  jobAll: "#95d2be",
-  jobDir: "#e7c08e",
-  jobDes: "#d0c1d2",
-  jobOther: "#c0c8c1",
+  jobAll200: "#95d2be",
+  jobAll400: "#709e8f",
+  jobDir200: "#e7c08e",
+  jobDir400: "#ad906b",
+  jobDes200: "#d0c1d2",
+  jobDes400: "#9c919e",
+  jobOther200: "#c0c8c1",
+  jobOther400: "#909691",
 };
 
 

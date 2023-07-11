@@ -6,7 +6,6 @@ import { client } from "@/utils/client";
 import { createJobHistoryFormatDate } from "@/utils/createJobHistoryFormatDate";
 import { JobHistory, JobHistoryFormat, Profile } from "@/models"
 import { mediaQuery } from "@/styles/const/size"
-import { colorPalette } from "@/styles/const/color"
 import { ProfileContents } from "@/components/organisms/ProfileContents"
 import { JobHistoryContents } from "@/components/organisms/JobHistoryContents"
 import { Header } from "@/components/molecule/Header"
@@ -96,7 +95,7 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
             }
           </Wrap>
           {jobDate &&
-            <TimeLine jobDate={jobDate} setJob={setJob} setContent={setContent} /> 
+            <TimeLine jobDate={jobDate} setJob={setJob} setContent={setContent} jobIndex={jobIndex} /> 
           }
         </div>
       </main>

@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components";
-import { mediaQuery } from "@/styles/const/size"
 
 type TitleProps = {
     title: string

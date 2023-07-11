@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
-import { colorPalette } from "@/styles/const/color"
+import React from "react";
+import styled from "styled-components";
 import { JobHistoryFormat } from "@/models"
 import { PageTitle } from "@/components/atoms/PageTitle"
-import { SkillList } from "@/components/molecule/SkillList"
 import { ResumeNavigation } from "@/components/molecule/ResumeNavigation"
 import { createHistoryDate } from "@/utils/createHistoryDate";
 

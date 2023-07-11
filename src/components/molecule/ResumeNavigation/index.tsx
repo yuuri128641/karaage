@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { colorPalette } from "@/styles/const/color"
-import { JobHistoryFormat } from "@/models"
-import { PageTitle } from "@/components/atoms/PageTitle"
-import { SkillList } from "@/components/molecule/SkillList"
+import { mediaQuery } from "@/styles/const/size"
 
 type ResumeNavigationProps = {
     jobIndex: number
@@ -38,6 +36,11 @@ const ReturnButton = styled.button<{isActive: boolean}>`
         border-width: 5px 10px 5px 0;
         border-color: transparent ${colorPalette.blue400} transparent transparent;
     }
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 `
 
 const NextButton = styled.button<{isActive: boolean}>`
@@ -60,6 +63,11 @@ const NextButton = styled.button<{isActive: boolean}>`
         border-style: solid;
         border-width: 5px 0 5px 10px;
         border-color: transparent transparent transparent ${colorPalette.blue400};
+    }
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
+        }
     }
 `
 
