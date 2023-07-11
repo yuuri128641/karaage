@@ -151,14 +151,16 @@ export const Header: React.FC<HeaderProps> = ({ setJob, maxJobLength, setContent
                     onClick={() => {
                         setJob()
                         setContent("profile")
+                        toggleTimeline()
                     }}
                 >
                     PROFILE
                 </LinkItem>
                 <LinkItem
                     onClick={() => {
-                        setJob(maxJobLength)
-                        setContent()
+                        setJob()
+                        setContent("resume")
+                        toggleTimeline()
                     }}
                 >
                     RESUME
@@ -167,6 +169,7 @@ export const Header: React.FC<HeaderProps> = ({ setJob, maxJobLength, setContent
                     onClick={() => {
                         setJob()
                         setContent("works")
+                        toggleTimeline()
                     }}
                 >
                     WORKS

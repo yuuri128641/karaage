@@ -10,6 +10,7 @@ import { colorPalette } from "@/styles/const/color"
 import { ProfileContents } from "@/components/organisms/ProfileContents"
 import { JobHistoryContents } from "@/components/organisms/JobHistoryContents"
 import { Header } from "@/components/molecule/Header"
+import { ResumeContents } from "@/components/organisms/ResumeContents"
 
 type Props = {
   jobDates: JobHistory[]
@@ -46,14 +47,6 @@ const Wrap = styled.div`
   max-width: 100%;
   overflow: hidden;
 `;
-
-const DesignText = styled.div`
-  font-size: 300px;
-  text-align: right;
-  letter-spacing: -0.1em;
-  color: ${colorPalette.lightGray100};
-  position: absolute;
-`
 
 const Home: NextPage<Props> = ({jobDates, profileDate}) => {
   const jobDate:JobHistoryFormat[] | undefined = createJobHistoryFormatDate(jobDates)
@@ -98,7 +91,9 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
             {activeContent === "profile" &&  
               <ProfileContents profile={profileDate} />
             }
-
+            {activeContent === "resume" &&  
+              <ResumeContents profile={profileDate} />
+            }
           </Wrap>
           {jobDate &&
             <TimeLine jobDate={jobDate} setJob={setJob} setContent={setContent} /> 

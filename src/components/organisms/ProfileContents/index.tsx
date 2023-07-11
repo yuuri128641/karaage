@@ -72,41 +72,6 @@ export const ProfileContents: React.FC<Props>= ({ profile }) => {
                         </NormalText>
                     </ContentWrap>
                 </Section>
-                <Section>
-                    <ContentWrap>
-                        <ContentTitle>OVERVIEW</ContentTitle>
-                        <CompanyList>
-                            {profile.companyHistory.map(({date, openCompany, outline}, index) => (
-                                <CompanyItem key={index}>
-                                    <CompanyDate>{date}</CompanyDate>
-                                    <span>{openCompany}{outline && `（${outline}）`}</span>
-                                </CompanyItem>
-                            ))}
-                        </CompanyList>
-                    </ContentWrap>
-                </Section>
-                <Section>
-                    <ContentWrap>
-                        <ContentTitle>DEVELOPMENT SKILL</ContentTitle>
-                        <SkillList skillList={profile.devSkill} />
-                    </ContentWrap>
-                    <ContentWrap>
-                        <ContentTitle>OTHER DEVELOPMENT SKILL</ContentTitle>
-                        <SkillList skillList={profile.otherDevSkill} />
-                    </ContentWrap>
-                    <ContentWrap>
-                        <ContentTitle>DESIGN SKILL</ContentTitle>
-                        <SkillList skillList={profile.designSkill} />
-                    </ContentWrap>
-                    <ContentWrap>
-                        <ContentTitle>OTHER CREATIVE SKILL</ContentTitle>
-                        <SkillList skillList={profile.videoSkill} />
-                    </ContentWrap>
-                    <ContentWrap>
-                        <ContentTitle>ALL OTHER SKILL</ContentTitle>
-                        <SkillList skillList={profile.otherSkill} />
-                    </ContentWrap>
-                </Section>
             </Wrap>
         </>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ProfileSkill } from "@/models"
-
+import { mediaQuery } from "@/styles/const/size"
 
 type SkillListProps = {
     skillList: ProfileSkill[]
@@ -23,12 +23,22 @@ const SkillItem = styled.li`
     }
 `
 
+const SkillItemWrap = styled.div`
+    display: inline-flex;
+    ${mediaQuery.underPc} {
+        flex-flow: column;
+    }
+`
+
 const SkillItemTitle = styled.span`
     width: 160px;
 `
 
 const SkillItemYear = styled.span`
     width: 60px;
+    ${mediaQuery.underPc} {
+        font-size: 12px;
+    }
 `
 
 const SkillItemText = styled.span`
@@ -41,8 +51,10 @@ export const SkillList: React.FC<SkillListProps> = ({skillList }) => {
         <SkillListStyle>
             {skillList.map(({title, content, year}, index) => (
                 <SkillItem key={index}>
-                    <SkillItemTitle>{title}</SkillItemTitle>
-                    <SkillItemYear>{year && `${year}年`}</SkillItemYear>
+                    <SkillItemWrap>
+                        <SkillItemTitle>{title}</SkillItemTitle>
+                        <SkillItemYear>{year && `${year}年`}</SkillItemYear>
+                    </SkillItemWrap>
                     <SkillItemText>{content}</SkillItemText>
                 </SkillItem>
             ))}

@@ -89,7 +89,7 @@ const NavigationWrap = styled.div`
 export const JobHistoryContents: React.FC<Props>= ({ jobDateItem, setJob, maxJobLength, jobIndex }) => {
     return (
         <>
-            <PageTitle title="RESUME" />
+            <PageTitle title="JOB" />
             <Wrap>
                 <Section>
                     <NavigationWrap>
