@@ -66,9 +66,10 @@ $ yarn storybook
 └── README.md
 ```
 
-# 技術
+## Technology
 
 - TypeScript
 - Next.js
 - styled-components
+- Vercel
   
