@@ -9,7 +9,9 @@ const HeaderStyle = styled.div`
     top: 0;
     left: 0;
     z-index: 1000;
-    height: 100%;
+    ${mediaQuery.underPc} {
+        height: 100%;
+    }
 `
 
 const Title = styled.h1`
@@ -90,15 +92,13 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
     padding: 0 20px;
     ${mediaQuery.pc} {
         padding-top: 20px;
-        &:hover {
-            opacity: 0.7;
-        }
     }
     ${mediaQuery.underPc} {
         height: 100%;
-        right: ${({ isOpen }) =>  isOpen ? "-200px" : 0 }; 
+        box-sizing: border-box;
+        right: ${({ isOpen }) =>  isOpen ? "-220px" : 0 }; 
         position: fixed;
-        width: 200px;
+        width: 220px;
         text-align: right;
         top: 0;
         padding-top: 120px;
