@@ -8,8 +8,8 @@ import { JobHistory, JobHistoryFormat, Profile } from "@/models"
 import { mediaQuery } from "@/styles/const/size"
 import { ProfileContents } from "@/components/organisms/ProfileContents"
 import { JobHistoryContents } from "@/components/organisms/JobHistoryContents"
-import { Header } from "@/components/molecule/Header"
 import { ResumeContents } from "@/components/organisms/ResumeContents"
+import { GlobalNavigation } from "@/components/molecule/GlobalNavigation"
 
 type Props = {
   jobDates: JobHistory[]
@@ -73,9 +73,8 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
     <>
       <main>
         <div ref={bodyRef}>
-          <Header
+          <GlobalNavigation
             setJob={setJob}
-            maxJobLength={maxJobLength}
             setContent={setContent}
           />
           <Wrap>

@@ -34,25 +34,6 @@ const NormalText = styled.p`
     margin-top: 16px;
 `
 
-const CompanyList = styled.ul`
-    list-style: none;
-    margin-top: 16px;
-`
-
-const CompanyItem = styled.li`
-    display: flex;
-    gap: 20px;
-    margin-top: 12px;
-    font-size: 14px;
-    &:first-child {
-        margin-top: 0;
-    }
-`
-
-const CompanyDate = styled.span`
-    width: 200px;
-`
-
 export const ProfileContents: React.FC<Props>= ({ profile }) => {
     return (
         <>

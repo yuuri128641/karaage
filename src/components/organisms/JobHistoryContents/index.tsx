@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { JobHistoryFormat } from "@/models"
-import { PageTitle } from "@/components/atoms/PageTitle"
 import { ResumeNavigation } from "@/components/molecule/ResumeNavigation"
 import { createHistoryDate } from "@/utils/createHistoryDate";
 
@@ -13,8 +12,8 @@ type Props = {
 };
 
 const Wrap = styled.div`
-    padding-top: 66px;
     max-width: 720px;
+    position: relative;
 `
 
 const Section = styled.section`
@@ -81,13 +80,14 @@ const AchievementText = styled.p`
 `
 
 const NavigationWrap = styled.div`
-    margin-top: 20px;
+    //margin-top: 20px;
+    //position: absolute;
+    //right: 0;
 `
 
 export const JobHistoryContents: React.FC<Props>= ({ jobDateItem, setJob, maxJobLength, jobIndex }) => {
     return (
         <>
-            <PageTitle title="JOB" />
             <Wrap>
                 <Section>
                     <NavigationWrap>
@@ -131,7 +131,7 @@ export const JobHistoryContents: React.FC<Props>= ({ jobDateItem, setJob, maxJob
                             <NormalText>{jobDateItem.businessContent}</NormalText>
                         </ContentWrap>
                     }
-                    {jobDateItem.achievement &&
+                    {jobDateItem.achievement.length !== 0 &&
                         <ContentWrap>
                             <ContentTitle>実績・取り組み</ContentTitle>
                             <div>

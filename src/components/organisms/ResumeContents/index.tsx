@@ -27,14 +27,6 @@ const ContentTitle = styled.h3`
     font-size: 24px;
 `
 
-const NormalText = styled.p`
-    font-size: 14px;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    max-width: 720px;
-    margin-top: 16px;
-`
-
 const CompanyList = styled.ul`
     list-style: none;
     margin-top: 16px;
