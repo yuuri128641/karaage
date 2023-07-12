@@ -24,7 +24,7 @@ const TimeLineWrap = styled.div<{isOpen: boolean}>`
     background-color: ${colorPalette.lightGray100};
     position: fixed;
     box-shadow: 0px 0px 20px -8px #bababa;
-    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT}` }; 
+    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT - 80}px` }; 
     transition: all 0.3s ease;
     z-index: 2000;
 `;
@@ -146,10 +146,10 @@ const NavigationLeft = styled.div<{
     isActive: boolean,
 }>`
     width: 40px;
-    height: ${TIMELINE_HEIGHT};
+    height: ${TIMELINE_HEIGHT}px;
     position: fixed;
     left: 0;
-    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT}` };
+    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT}px` };
     opacity: ${({ isActive }) =>  isActive ? 1 : 0 };
     transition: all 0.3s ease;
     &::after {
@@ -174,10 +174,10 @@ const NavigationRight = styled.div<{
     isActive: boolean,
 }>`
     width: 40px;
-    height: ${TIMELINE_HEIGHT};
+    height: ${TIMELINE_HEIGHT}px;
     position: fixed;
     right: 0;
-    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT}` }; 
+    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT}px` }; 
     transition: all 0.3s ease;
     opacity: ${({ isActive }) =>  isActive ? 1 : 0 };
     &::after {

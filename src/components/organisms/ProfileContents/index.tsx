@@ -8,7 +8,7 @@ type Props = {
 };
 
 const Wrap = styled.div`
-    padding-top: 40px;
+    margin-top: 40px;
 `
 
 const Section = styled.section`
@@ -20,6 +20,9 @@ const Section = styled.section`
 
 const ContentWrap = styled.div`
     margin-top: 40px;
+    &:first-child {
+        margin-top: 0;
+    }
 `
 
 const ContentTitle = styled.h3`
@@ -30,7 +33,6 @@ const NormalText = styled.p`
     font-size: 14px;
     line-height: 1.6;
     white-space: pre-wrap;
-    max-width: 720px;
     margin-top: 16px;
 `
 

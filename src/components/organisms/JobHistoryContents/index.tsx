@@ -12,12 +12,11 @@ type Props = {
 };
 
 const Wrap = styled.div`
-    max-width: 720px;
     position: relative;
 `
 
 const Section = styled.section`
-    margin-top: 80px;
+    margin-top: 40px;
     &:first-child {
         margin-top: 0;
     }
@@ -62,7 +61,6 @@ const NormalText = styled.p`
     font-size: 14px;
     line-height: 1.6;
     white-space: pre-wrap;
-    max-width: 720px;
     margin-top: 16px;
     &:first-child {
         margin-top: 0;

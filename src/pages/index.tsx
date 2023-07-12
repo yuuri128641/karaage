@@ -38,13 +38,14 @@ export const getStaticProps = async () => {
 };
 
 const Wrap = styled.div`
-  ${mediaQuery.pc} {
-    padding-left: 320px;
-    padding-top: 120px;
+  width: 100%;
+  padding: 120px 10vw 480px 20vw;
+  box-sizing: border-box;
+  margin: 0 auto;
+  ${mediaQuery.underPc} {
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  padding: 80px 20px 480px 20px;
-  max-width: 100%;
-  overflow: hidden;
 `;
 
 const Home: NextPage<Props> = ({jobDates, profileDate}) => {

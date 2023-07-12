@@ -10,7 +10,6 @@ type SkillListProps = {
 const SkillListStyle = styled.ul`
     list-style: none;
     margin-top: 16px;
-    max-width: 720px;
 `
 
 const SkillItem = styled.li`

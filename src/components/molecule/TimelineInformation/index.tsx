@@ -7,7 +7,7 @@ const Information = styled.div<{isOpen: boolean}>`
     position: absolute;
     bottom: 20px;
     left: 20px;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.9);
     border: 1px solid ${colorPalette.lightGray600};
     box-sizing: border-box;
     padding: 12px;

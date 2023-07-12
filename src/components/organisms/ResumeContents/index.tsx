@@ -3,13 +3,14 @@ import styled from "styled-components";
 import { Profile } from "@/models"
 import { PageTitle } from "@/components/atoms/PageTitle"
 import { SkillList } from "@/components/molecule/SkillList"
+import { mediaQuery } from "@/styles/const/size"
 
 type Props = {
     profile: Profile
 };
 
 const Wrap = styled.div`
-    padding-top: 40px;
+    margin-top: 40px;
 `
 
 const Section = styled.section`
@@ -21,6 +22,9 @@ const Section = styled.section`
 
 const ContentWrap = styled.div`
     margin-top: 40px;
+    &:first-child {
+        margin-top: 0;
+    }
 `
 
 const ContentTitle = styled.h3`
@@ -30,6 +34,9 @@ const ContentTitle = styled.h3`
 const CompanyList = styled.ul`
     list-style: none;
     margin-top: 16px;
+    ${mediaQuery.underPc} {
+        margin-top: 20px;
+    }
 `
 
 const CompanyItem = styled.li`
@@ -39,6 +46,10 @@ const CompanyItem = styled.li`
     font-size: 14px;
     &:first-child {
         margin-top: 0;
+    }
+    ${mediaQuery.underPc} {
+        flex-flow: column;
+        gap: 4px;
     }
 `
 
