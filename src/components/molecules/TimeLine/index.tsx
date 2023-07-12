@@ -5,8 +5,8 @@ import { createDurationDate } from "@/utils/createDurationDate"
 import { FIRST_WORKING_DATE } from "site.config"
 import { JobHistoryFormat } from "@/models"
 import { mediaQuery } from "@/styles/const/size"
-import { TimelineInformation } from "@/components/molecule/TimelineInformation"
-import { TimelineBar } from "@/components/molecule/TimelineBar"
+import { TimelineInformation } from "@/components/molecules/TimelineInformation"
+import { TimelineBar } from "@/components/molecules/TimelineBar"
 
 type TimeLineProps = {
     jobDate?: JobHistoryFormat[]

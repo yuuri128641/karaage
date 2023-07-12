@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { JobHistoryFormat } from "@/models"
-import { ResumeNavigation } from "@/components/molecule/ResumeNavigation"
+import { ResumeNavigation } from "@/components/molecules/ResumeNavigation"
 import { createHistoryDate } from "@/utils/createHistoryDate";
 
 type Props = {

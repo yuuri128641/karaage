@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef} from "react";
 import type { NextPage } from "next"
 import styled from "styled-components";
-import { TimeLine } from "@/components/molecule/TimeLine"
+import { TimeLine } from "@/components/molecules/TimeLine"
 import { client } from "@/utils/client";
 import { createJobHistoryFormatDate } from "@/utils/createJobHistoryFormatDate";
 import { JobHistory, JobHistoryFormat, Profile } from "@/models"
@@ -9,7 +9,7 @@ import { mediaQuery } from "@/styles/const/size"
 import { ProfileContents } from "@/components/organisms/ProfileContents"
 import { JobHistoryContents } from "@/components/organisms/JobHistoryContents"
 import { ResumeContents } from "@/components/organisms/ResumeContents"
-import { GlobalNavigation } from "@/components/molecule/GlobalNavigation"
+import { GlobalNavigation } from "@/components/molecules/GlobalNavigation"
 
 type Props = {
   jobDates: JobHistory[]

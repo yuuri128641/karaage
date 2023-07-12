@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Profile } from "@/models"
 import { PageTitle } from "@/components/atoms/PageTitle"
-import { SkillList } from "@/components/molecule/SkillList"
+import { SkillList } from "@/components/molecules/SkillList"
 import { mediaQuery } from "@/styles/const/size"
 
 type Props = {
