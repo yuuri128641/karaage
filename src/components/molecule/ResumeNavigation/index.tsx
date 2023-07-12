@@ -7,7 +7,6 @@ type ResumeNavigationProps = {
     jobIndex: number
     maxJobLength: number
     setJob: any
-    css?: string
 };
 
 const ButtonWrap = styled.div`
@@ -71,7 +70,7 @@ const NextButton = styled.button<{isActive: boolean}>`
     }
 `
 
-export const ResumeNavigation: React.FC<ResumeNavigationProps> = ({ jobIndex, maxJobLength, setJob, css }) => {
+export const ResumeNavigation: React.FC<ResumeNavigationProps> = ({ jobIndex, maxJobLength, setJob }) => {
     const [isReturnButtonActive, setIsReturnButtonActive] = useState(false)
     const [isNextButtonActive, setIsNextButtonActive] = useState(false)
 
@@ -92,8 +91,7 @@ export const ResumeNavigation: React.FC<ResumeNavigationProps> = ({ jobIndex, ma
     }
 
     useEffect(() => {
-
-        console.log("effect" + jobIndex)
+        // 初期状態のボタンの設定
         if(jobIndex === 0) {
             setIsReturnButtonActive(false)
             setIsNextButtonActive(true)
@@ -104,7 +102,6 @@ export const ResumeNavigation: React.FC<ResumeNavigationProps> = ({ jobIndex, ma
             setIsReturnButtonActive(true)
             setIsNextButtonActive(true)
         }
-
     }, [jobIndex, maxJobLength])
 
     return (

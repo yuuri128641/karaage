@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { colorPalette } from "@/styles/const/color"
 import { mediaQuery } from "@/styles/const/size"
 
-type HeaderProps = {
+type GlobalNavigationProps = {
     setJob: any
-    maxJobLength: number
     setContent: any
 };
 
@@ -62,17 +61,20 @@ const ButtonLine = styled.span<{isOpen: boolean }>`
     right: 0;
     margin: auto;
     transition: all 0.3s ease;
+
     &:nth-child(1) {
         top: ${({ isOpen }) =>  isOpen ? "20px" : "0" }; 
         bottom: ${({ isOpen }) =>  isOpen ? "auto" : "0" }; 
         transform: ${({ isOpen }) =>  isOpen ? "rotate(0)" : "rotate(45deg)" }; 
     }
+
     &:nth-child(2) {
         top: 0;
         bottom: 0;
         width: ${({ isOpen }) =>  isOpen ? "80" : "100" }%; 
         height: ${({ isOpen }) =>  isOpen ? "4" : "0" }px; 
     }
+
     &:nth-child(3) {
         width: ${({ isOpen }) =>  isOpen ? "60" : "100" }%; 
         bottom: ${({ isOpen }) =>  isOpen ? "20px" : "0" };
@@ -90,10 +92,13 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
     flex-flow: column;
     padding: 0 20px;
     position: fixed;
+    z-index: 1000;
+
     ${mediaQuery.pc} {
         padding-top: 20px;
         top: 60px;
     }
+
     ${mediaQuery.underPc} {
         height: 100%;
         box-sizing: border-box;
@@ -102,7 +107,7 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
         text-align: right;
         top: 0;
         padding-top: 120px;
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 0.9);
         transition: all 0.3s ease;
     }
 `;
@@ -110,10 +115,12 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
 const LinkItem = styled.div`
     color: ${colorPalette.blue400};
     cursor: pointer;
+
     & a {
         color: ${colorPalette.blue400};
         text-decoration: none;
     }
+
     ${mediaQuery.pc} {
         &:hover {
             opacity: 0.7;
@@ -121,7 +128,7 @@ const LinkItem = styled.div`
     }
 `;
 
-export const Header: React.FC<HeaderProps> = ({ setJob, maxJobLength, setContent }) => {
+export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setContent }) => {
     const [open, setOpen] = useState(true)
     const toggleTimeline = () => setOpen(!open)
     return (
