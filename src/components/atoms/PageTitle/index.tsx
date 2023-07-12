@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components";
+import { mediaQuery } from "@/styles/const/size"
 
 type TitleProps = {
     title: string
@@ -10,6 +11,9 @@ type TitleProps = {
 const StyledPageTitle = styled.div`
     font-size: 60px;
     letter-spacing: 0.2em;
+    ${mediaQuery.underPc} {
+        font-size: 40px;
+    }
 `
 
 export const PageTitle: React.FC<TitleProps> = ({ title, className, variant = "div" }) => {
