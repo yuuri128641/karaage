@@ -55,20 +55,26 @@ const FormInput = styled.input`
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 18px;
+    ${mediaQuery.underPc} {
+        max-width: 100%;
+    }
 `
 
 const FormButton = styled.button`
-    height: 40px;
+    height: 48px;
     max-width: 360px;
     width: 100%;
     background-color: ${colorPalette.blue400};
     color: ${colorPalette.white};
     border: 0;
     border-radius: 9999px;
-    font-size: 16px;
+    font-size: 18px;
     border: 2px solid ${colorPalette.blue400};
     transition: all 0.3s ease;
     cursor: pointer;
+    ${mediaQuery.underPc} {
+        max-width: 100%;
+    }
     ${mediaQuery.pc} {
         &:hover {
             background-color: ${colorPalette.white};
