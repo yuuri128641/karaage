@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef} from "react";
 import type { NextPage } from "next"
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { TimeLine } from "@/components/molecules/TimeLine"
 import { client } from "@/utils/client";
 import { createJobHistoryFormatDate } from "@/utils/createJobHistoryFormatDate";
@@ -78,6 +78,27 @@ const CopyText = styled.div`
   top: 0;
 `
 
+const rotation = keyframes`
+    0% {
+        transform:rotate(0);
+    }
+
+    100% {
+        transform:rotate(360deg);
+    }
+`
+
+const CopyTextA = styled.div`
+  writing-mode: horizontal-tb;
+  color: ${colorPalette.white};
+  font-size: 1600px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  mix-blend-mode: soft-light;
+  animation: ${rotation} 12s linear infinite;
+`
+
 const CopySubText = styled.div`
   writing-mode: vertical-rl;
   color: ${colorPalette.lightGray700};
@@ -148,6 +169,7 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
                   FRONTEND
                 </CopySubText>
                 <CopyText>PORTFOLIO</CopyText>
+                <CopyTextA>あ</CopyTextA>
               </FirstView>
             }
             {activeContent === "profile" &&  
