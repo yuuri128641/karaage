@@ -104,7 +104,7 @@ export const TimelineBar: React.FC<TimelineBarProps> = ({ job, itemIndex, setJob
             themeStyle={options[job.jobCategory]}
             onClick={() => {
                 setJob(itemIndex)
-                setContent()
+                setContent("jobHistory")
             }}
             isActive={itemIndex === jobIndex && true}
         >

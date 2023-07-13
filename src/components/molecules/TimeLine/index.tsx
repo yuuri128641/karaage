@@ -9,31 +9,38 @@ import { TimelineInformation } from "@/components/molecules/TimelineInformation"
 import { TimelineBar } from "@/components/molecules/TimelineBar"
 
 type TimeLineProps = {
-    jobDate?: JobHistoryFormat[]
+    jobDate: JobHistoryFormat[]
     setJob?: any
     setContent?: any
     jobIndex?: number
 };
 
 const MONTH_WIDTH = 40;
-const TIMELINE_HEIGHT = 280;
+const TIMELINE_HEIGHT = 340;
+const TIMELINE_ITEM_HEIGHT = 56;
 
-const TimeLineWrap = styled.div<{isOpen: boolean}>`
+const TimeLineWrap = styled.div<{
+    isOpen: boolean
+    timelineHeight: number
+}>`
     position: fixed;
     width: 100%;
     background-color: ${colorPalette.lightGray100};
     position: fixed;
     box-shadow: 0px 0px 20px -8px #bababa;
-    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT - 80}px` }; 
+    bottom: ${({ isOpen, timelineHeight }) =>  isOpen ? "0" : `-${timelineHeight - 80}px` }; 
     transition: all 0.3s ease;
     z-index: 2000;
 `;
 
-const ScrollArea = styled.div<{isOpen: boolean}>`
+const ScrollArea = styled.div<{
+    isOpen: boolean
+    timelineHeight: number
+}>`
     overflow-x: auto;
     overflow-y: hidden;
     position: relative;
-    height: ${TIMELINE_HEIGHT}px;
+    height: ${({timelineHeight}) => timelineHeight}px;
     width: 100%;
 `;
 
@@ -144,12 +151,13 @@ const flash = keyframes`
 const NavigationLeft = styled.div<{
     isOpen: boolean,
     isActive: boolean,
+    timelineHeight: number
 }>`
     width: 40px;
     height: ${TIMELINE_HEIGHT}px;
     position: fixed;
     left: 0;
-    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT}px` };
+    bottom: ${({ isOpen, timelineHeight }) =>  isOpen ? "0" : `-${timelineHeight}px` };
     opacity: ${({ isActive }) =>  isActive ? 1 : 0 };
     transition: all 0.3s ease;
     &::after {
@@ -172,12 +180,13 @@ const NavigationLeft = styled.div<{
 const NavigationRight = styled.div<{
     isOpen: boolean,
     isActive: boolean,
+    timelineHeight: number
 }>`
     width: 40px;
-    height: ${TIMELINE_HEIGHT}px;
+    height: ${({timelineHeight}) => timelineHeight}px;
     position: fixed;
     right: 0;
-    bottom: ${({ isOpen }) =>  isOpen ? "0" : `-${TIMELINE_HEIGHT}px` }; 
+    bottom: ${({ isOpen, timelineHeight }) =>  isOpen ? "0" : `-${timelineHeight}px` }; 
     transition: all 0.3s ease;
     opacity: ${({ isActive }) =>  isActive ? 1 : 0 };
     &::after {
@@ -209,6 +218,15 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent,
     const [scrollEndPosition, setScrollEndPosition] = useState(false)
 
     const toggleTimeline = () => setOpen(!open)
+
+    // タイムラインの高さの設定
+    const duplicationEventLength = jobDate?.map(function (item) {
+        return item.duplicationEventLength;
+    });
+    const maxDuplicationEventLength = Math.max.apply(null, duplicationEventLength)
+    const timelineHeight = (maxDuplicationEventLength + 1) * TIMELINE_ITEM_HEIGHT
+
+
 
     // 年度判定
     const changeYear = (index:number) => {
@@ -248,14 +266,14 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent,
     }, [])
 
     return (
-        <TimeLineWrap isOpen={open}>
+        <TimeLineWrap isOpen={open} timelineHeight={timelineHeight}>
             <TimeLineButton
                 onClick={toggleTimeline}
                 isOpen={open}
             >
                 {open ? "CLOSE" : "OPEN" } JobHistory
             </TimeLineButton>
-            <ScrollArea isOpen={open} ref={timelineWrapRef}>
+            <ScrollArea isOpen={open} ref={timelineWrapRef} timelineHeight={timelineHeight}>
                 <DateWap ref={dataRef}>
                     {durationDates.map((item, index:number) => (
                         <DateItem key="index" isJanuary={changeYear(index)}>
@@ -282,8 +300,8 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent,
                     </ProjectArea>
                     <div ref={timelineEndRef} />
                 </DateWap>
-                <NavigationLeft isOpen={open} isActive={scrollStartPosition} />
-                <NavigationRight isOpen={open} isActive={scrollEndPosition} />
+                <NavigationLeft isOpen={open} isActive={scrollStartPosition} timelineHeight={timelineHeight} />
+                <NavigationRight isOpen={open} isActive={scrollEndPosition} timelineHeight={timelineHeight} />
             </ScrollArea>
             <TimelineInformation />
         </TimeLineWrap>

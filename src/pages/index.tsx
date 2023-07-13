@@ -10,6 +10,7 @@ import { ProfileContents } from "@/components/organisms/ProfileContents"
 import { JobHistoryContents } from "@/components/organisms/JobHistoryContents"
 import { ResumeContents } from "@/components/organisms/ResumeContents"
 import { GlobalNavigation } from "@/components/molecules/GlobalNavigation"
+import ReactGA from "react-ga4";
 
 type Props = {
   jobDates: JobHistory[]
@@ -53,6 +54,7 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
   const bodyRef = useRef<HTMLDivElement>(null)
   const [jobIndex, setJobIndex] = useState<number | undefined>()
   const [activeContent, setActiveContent] = useState("profile")
+  const [pageTitle, setPageTitle] = useState("titlePage")
 
   const maxJobLength = jobDate.length - 1
 
@@ -63,12 +65,21 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
   const setContent = (page: string) => {
     setActiveContent(page)
   }
+
   useEffect(()=>{
     bodyRef?.current?.scrollIntoView({
       block: "start",
       behavior: "smooth",
     });
-  }, [jobIndex, activeContent])
+  
+    const title = `【${activeContent}】 ${jobIndex}`
+    setPageTitle(title)
+    ReactGA.initialize(process.env.NEXT_PUBLIC_GA || "");
+    ReactGA.send({
+        hitType: "pageview",
+        title: pageTitle
+    });
+  }, [jobIndex, activeContent, pageTitle])
 
   return (
     <>
