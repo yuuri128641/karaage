@@ -70,6 +70,7 @@ const ButtonLine = styled.span<{isOpen: boolean }>`
     right: 0;
     margin: auto;
     transition: all 0.3s ease;
+    box-shadow: 2px 2px 0px 2px ${colorPalette.white};
 
     &:nth-child(1) {
         top: ${({ isOpen }) =>  isOpen ? "20px" : "0" }; 
@@ -168,7 +169,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setC
                 onClick={() => {
                     setJob()
                     setContent()
-                    toggleMenu()
+                    setMenuOpen(true)
                     setOpen(true)
                 }}
             >
