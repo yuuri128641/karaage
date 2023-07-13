@@ -74,14 +74,14 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
       behavior: "smooth",
     });
   
-    const title = `【${activeContent}】 ${jobIndex}`
+    const title = `【${activeContent}】 ${jobIndex} ${login}`
     setPageTitle(title)
     ReactGA.initialize(process.env.NEXT_PUBLIC_GA || "");
     ReactGA.send({
         hitType: "pageview",
         title: pageTitle
     });
-  }, [jobIndex, activeContent, pageTitle])
+  }, [jobIndex, activeContent, pageTitle, login])
 
   return (
     <>
