@@ -4,9 +4,11 @@ import { Profile } from "@/models"
 import { PageTitle } from "@/components/atoms/PageTitle"
 import { SkillList } from "@/components/molecules/SkillList"
 import { mediaQuery } from "@/styles/const/size"
+import { colorPalette } from "@/styles/const/color"
 
 type Props = {
     profile: Profile
+    login: boolean
 };
 
 const Wrap = styled.div`
@@ -57,7 +59,18 @@ const CompanyDate = styled.span`
     width: 200px;
 `
 
-export const ResumeContents: React.FC<Props>= ({ profile }) => {
+const LoginText = styled.span`
+    color: ${colorPalette.blue500};
+`
+
+const NoteText = styled.p`
+    font-size: 12px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    margin-top: 16px;
+`
+
+export const ResumeContents: React.FC<Props>= ({ profile, login }) => {
     return (
         <>
             <PageTitle title="RESUME" />
@@ -66,13 +79,19 @@ export const ResumeContents: React.FC<Props>= ({ profile }) => {
                     <ContentWrap>
                         <ContentTitle>OVERVIEW</ContentTitle>
                         <CompanyList>
-                            {profile.companyHistory.map(({date, openCompany, outline}, index) => (
+                            {profile.companyHistory.map(({date, openCompany, certifiedCompany, outline}, index) => (
                                 <CompanyItem key={index}>
                                     <CompanyDate>{date}</CompanyDate>
-                                    <span>{openCompany}{outline && `（${outline}）`}</span>
+                                    <span>
+                                        {login ? <LoginText>{certifiedCompany}</LoginText> : openCompany}
+                                        {outline && `（${outline}）`}
+                                    </span>
                                 </CompanyItem>
                             ))}
                         </CompanyList>
+                        <NoteText>
+                            {profile.companyHistoryNote}
+                        </NoteText>
                     </ContentWrap>
                 </Section>
                 <Section>

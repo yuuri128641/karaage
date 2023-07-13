@@ -128,6 +128,27 @@ const LinkItem = styled.div`
     }
 `;
 
+const LoginLink = styled.button`
+    margin-top: 20px;
+    color: ${colorPalette.blue400};
+    border: 1px solid ${colorPalette.blue400};
+    padding: 4px calc(12px - 0.4em) 4px 12px;
+    background-color: ${colorPalette.white};
+    font-size: 16px;
+    letter-spacing: 0.4em;
+    display: inline-flex;
+    width: fit-content;
+    justify-content: center;
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+    ${mediaQuery.underPc} {
+        width: 100%;
+    }
+`
+
 export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setContent }) => {
     const [open, setOpen] = useState(true)
     const toggleTimeline = () => setOpen(!open)
@@ -137,6 +158,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setC
             <Button
                 onClick={toggleTimeline}
                 isOpen={open}
+                type="button"
             >
                 <ButtonLine isOpen={open} />
                 <ButtonLine isOpen={open} />
@@ -179,6 +201,16 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setC
                         GitHub
                     </a>
                 </LinkItem>
+                <LoginLink
+                    type="button"
+                    onClick={() => {
+                        setJob()
+                        setContent("login")
+                        toggleTimeline()
+                    }}
+                >
+                    LOGIN
+                </LoginLink>
             </LinkWrap>
         </>
     );

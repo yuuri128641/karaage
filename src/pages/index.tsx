@@ -10,6 +10,7 @@ import { ProfileContents } from "@/components/organisms/ProfileContents"
 import { JobHistoryContents } from "@/components/organisms/JobHistoryContents"
 import { ResumeContents } from "@/components/organisms/ResumeContents"
 import { GlobalNavigation } from "@/components/molecules/GlobalNavigation"
+import { LoginContents } from "@/components/organisms/LoginContents"
 import ReactGA from "react-ga4";
 
 type Props = {
@@ -55,6 +56,7 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
   const [jobIndex, setJobIndex] = useState<number | undefined>()
   const [activeContent, setActiveContent] = useState("profile")
   const [pageTitle, setPageTitle] = useState("titlePage")
+  const [login, setLogtinState] = useState(false)
 
   const maxJobLength = jobDate.length - 1
 
@@ -96,13 +98,17 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
                 maxJobLength={maxJobLength}
                 setJob={setJob}
                 jobIndex={jobIndex}
+                login={login}
               />
             }
             {activeContent === "profile" &&  
-              <ProfileContents profile={profileDate} />
+              <ProfileContents profile={profileDate} login={login} />
             }
             {activeContent === "resume" &&  
-              <ResumeContents profile={profileDate} />
+              <ResumeContents profile={profileDate} login={login} />
+            }
+            {activeContent === "login" &&  
+              <LoginContents setLogtinState={setLogtinState} login={login} />
             }
           </Wrap>
           {jobDate &&
