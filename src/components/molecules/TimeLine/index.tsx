@@ -30,7 +30,7 @@ const TimeLineWrap = styled.div<{
     box-shadow: 0px 0px 20px -8px #bababa;
     bottom: ${({ isOpen, timelineHeight }) =>  isOpen ? "0" : `-${timelineHeight - 80}px` }; 
     transition: all 0.3s ease;
-    z-index: 2000;
+    z-index: 500;
 `;
 
 const ScrollArea = styled.div<{
