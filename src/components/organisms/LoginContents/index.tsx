@@ -9,7 +9,6 @@ type Props = {
     login?: any
 };
 
-
 const Wrap = styled.div`
     margin-top: 40px;
 `
@@ -115,7 +114,7 @@ export const LoginContents: React.FC<Props>= ({ setLoginState, login }) => {
                     :
                     <>
                         <DescriptionText>
-                            ID・PASSWORDをお持ちの方はこちらにて認証いただくと、非公開情報も閲覧することができます。
+                            ID・PASSWORD（職務経歴書掲載）をお持ちの方はこちらにて認証いただくと、<LoginText>非公開情報</LoginText>を閲覧することができます。
                         </DescriptionText>
                         {isError &&
                             <ErrorText>
@@ -143,7 +142,7 @@ export const LoginContents: React.FC<Props>= ({ setLoginState, login }) => {
                                     }}
                                     placeholder="半角英数"
                                 />
-                                <FormNote>annrisは小学生のころこどもちゃれんじをやっていた。<br />「好きな食べ物のイラストを描こう！」というお題に白米に乗った●●●の絵を描いて送ったほど、幼少期から好きな食べ物は？</FormNote>
+                                <FormNote>annrisは小学生の頃こどもちゃれんじをやっていた。<br />「好きな食べ物のイラストを描こう！」というお題に、白米に乗せて絵を描いたほど、幼少期から好きな食べ物は？</FormNote>
                             </FormContent>
                         </FormWrap>
                         <FormWrap>
