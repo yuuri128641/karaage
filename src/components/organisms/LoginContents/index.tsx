@@ -38,7 +38,7 @@ const FormContent = styled.div`
 `
 const FormNote = styled.div`
     font-size: 12px;
-    max-width: 360px;
+    max-width: 720px;
     width: 100%;
     line-height: 1.6;
 `
@@ -54,6 +54,7 @@ const FormInput = styled.input`
     width: 100%;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 18px;
 `
 
 const FormButton = styled.button`
@@ -118,19 +119,25 @@ export const LoginContents: React.FC<Props>= ({ setLogtinState, login }) => {
                         <FormWrap>
                             <FormContent>
                                 <FormTitle>ID</FormTitle>
-                                <FormInput onChange={(e) => {
-                                    setId(e.target.value)
-                                }} />
-                                <FormNote>annrisが2017年ごろからハマり一人でも週３で食べにいき10kg太った食べ物は？</FormNote>
+                                <FormInput 
+                                    onChange={(e) => {
+                                        setId(e.target.value)
+                                    }}
+                                    placeholder="半角英数"
+                                />
+                                <FormNote>annrisが2017年ごろから猛烈にハマり、週３日１人でも食べに行って気づいたら10kg太った食べ物は？</FormNote>
                             </FormContent>
                         </FormWrap>
                         <FormWrap>
                             <FormContent>
                                 <FormTitle>PASS</FormTitle>
-                                <FormInput onChange={(e) => {
-                                    setPassword(e.target.value)
-                                }} />
-                                <FormNote>こどもちゃれんじの赤ペン先生宛に白米に乗った●●●の絵を描いて送ったくらいannrisが幼少期から好きな食べ物は？</FormNote>
+                                <FormInput
+                                    onChange={(e) => {
+                                        setPassword(e.target.value)
+                                    }}
+                                    placeholder="半角英数"
+                                />
+                                <FormNote>annrisは小学生のころこどもちゃれんじをやっていた。<br />「好きな食べ物のイラストを描こう！」というお題に白米に乗った●●●の絵を描いて送ったほど、幼少期から好きな食べ物は？</FormNote>
                             </FormContent>
                         </FormWrap>
                         <FormWrap>
