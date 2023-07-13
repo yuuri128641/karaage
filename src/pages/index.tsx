@@ -179,7 +179,13 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
               <ResumeContents profile={profileDate} login={login} />
             }
             {activeContent === "login" &&  
-              <LoginContents setLoginState={setLoginState} login={login} />
+              <LoginContents
+                setLoginState={setLoginState}
+                login={login}
+                setJob={setJob}
+                setContent={setContent}
+                setOpen={setOpen}
+              />
             }
           </Wrap>
           {jobDate &&

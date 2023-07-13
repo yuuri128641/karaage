@@ -7,6 +7,9 @@ import { colorPalette } from "@/styles/const/color"
 type Props = {
     setLoginState?: any
     login?: any
+    setJob: any
+    setContent: any
+    setOpen: any
 };
 
 const Wrap = styled.div`
@@ -82,11 +85,50 @@ const FormButton = styled.button`
     }
 `
 
+const LinkWrap = styled.div`
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    flex-flow: column;
+    align-items: baseline;
+`
+
+const LinkItem = styled.div`
+    color: ${colorPalette.blue400};
+    cursor: pointer;
+    font-size: 20px;
+    letter-spacing: 0.4em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    & a {
+        color: ${colorPalette.blue400};
+        text-decoration: none;
+    }
+
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    &::after {
+        content: "";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 8px 0 8px 8px;
+        border-color: transparent transparent transparent ${colorPalette.blue400};
+        transition: all 0.3s ease;
+    }
+`;
+
 const LoginText = styled.span`
     color: ${colorPalette.blue500};
 `
 
-export const LoginContents: React.FC<Props>= ({ setLoginState, login }) => {
+export const LoginContents: React.FC<Props>= ({ setLoginState, login, setJob, setContent, setOpen }) => {
 
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
@@ -109,6 +151,27 @@ export const LoginContents: React.FC<Props>= ({ setLoginState, login }) => {
                         <DescriptionText>
                             認証が完了しています。<br />
                             <LoginText>非公開情報</LoginText>がページに表示されています。
+
+                            <LinkWrap>
+                                <LinkItem
+                                    onClick={() => {
+                                        setJob()
+                                        setContent("profile")
+                                        setOpen(false)
+                                    }}
+                                >
+                                    PROFILE
+                                </LinkItem>
+                                <LinkItem
+                                    onClick={() => {
+                                        setJob()
+                                        setContent("resume")
+                                        setOpen(false)
+                                    }}
+                                >
+                                    RESUME
+                                </LinkItem>
+                            </LinkWrap>
                         </DescriptionText>
                     </>
                     :

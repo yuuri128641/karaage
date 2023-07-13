@@ -124,6 +124,7 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
 const LinkItem = styled.div`
     color: ${colorPalette.blue400};
     cursor: pointer;
+    letter-spacing: 0.4em;
 
     & a {
         color: ${colorPalette.blue400};
