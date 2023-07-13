@@ -25,12 +25,18 @@ const Title = styled.h1`
     gap: 20px;
     display: flex;
     align-items: center;
+    cursor: pointer;
     ${mediaQuery.underPc} {
         font-size: 14px;
         gap: 4px;
         flex-flow: column;
         justify-content: center;
         align-items: flex-start;
+    }
+    ${mediaQuery.pc} {
+        &:hover {
+            opacity: 0.7;
+        }
     }
 `;
 
@@ -157,7 +163,17 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setC
     const toggleMenu = () => setMenuOpen(!menuOpen)
     return (
         <>
-            <Title><TitleName>annris</TitleName>PORTFOLIO</Title>
+            <Title
+                onClick={() => {
+                    setJob()
+                    setContent()
+                    toggleMenu()
+                    setOpen(true)
+                }}
+            >
+                <TitleName>annris</TitleName>
+                PORTFOLIO
+            </Title>
             <Button
                 onClick={toggleMenu}
                 isOpen={menuOpen}
