@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { Profile } from "@/models"
 import { PageTitle } from "@/components/atoms/PageTitle"
+import { colorPalette } from "@/styles/const/color"
 
 type Props = {
     profile: Profile
+    login: boolean
 };
 
 const Wrap = styled.div`
@@ -36,14 +38,28 @@ const NormalText = styled.p`
     margin-top: 16px;
 `
 
-export const ProfileContents: React.FC<Props>= ({ profile }) => {
+const LoginText = styled.span`
+    color: ${colorPalette.blue500};
+    margin-left: 20px;
+`
+
+export const ProfileContents: React.FC<Props>= ({ profile, login }) => {
     return (
         <>
             <PageTitle title="PROFILE" />
             <Wrap>
                 <Section>
                     <ContentWrap>
-                        <ContentTitle>{profile.openName}</ContentTitle>
+                        <ContentTitle>
+                            {profile.openName}
+                            {login &&
+                                <>
+                                    <LoginText>
+                                        {profile.closeName}
+                                    </LoginText>
+                                </>
+                            }
+                        </ContentTitle>
                         <NormalText>{profile.profileText}</NormalText>
                     </ContentWrap>
                     <ContentWrap>

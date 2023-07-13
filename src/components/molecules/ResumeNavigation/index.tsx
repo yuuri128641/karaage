@@ -109,12 +109,14 @@ export const ResumeNavigation: React.FC<ResumeNavigationProps> = ({ jobIndex, ma
             <ReturnButton 
                 onClick={returnJobIndex}
                 isActive={isReturnButtonActive}
+                type="button"
             >
                 RETURN
             </ReturnButton>
             <NextButton 
                 onClick={nextJobIndex}
                 isActive={isNextButtonActive}
+                type="button"
             >
                 NEXT
             </NextButton>

@@ -140,6 +140,7 @@ export const TimelineInformation: React.FC = () => {
             <InformationButton
                 isOpen={navigation}
                 onClick={toggleNavigation}
+                type="button"
             />
         </Information>
     );

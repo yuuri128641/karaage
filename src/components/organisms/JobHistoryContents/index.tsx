@@ -9,6 +9,7 @@ type Props = {
     setJob: any
     maxJobLength: number
     jobIndex: number
+    login: boolean
 };
 
 const Wrap = styled.div`
@@ -77,24 +78,18 @@ const AchievementText = styled.p`
     }
 `
 
-const NavigationWrap = styled.div`
-    //margin-top: 20px;
-    //position: absolute;
-    //right: 0;
-`
-
 export const JobHistoryContents: React.FC<Props>= ({ jobDateItem, setJob, maxJobLength, jobIndex }) => {
     return (
         <>
             <Wrap>
                 <Section>
-                    <NavigationWrap>
+                    <div>
                         <ResumeNavigation
                             jobIndex={jobIndex}
                             maxJobLength={maxJobLength}
                             setJob={setJob}
                         />
-                    </NavigationWrap>
+                    </div>
                     <DateText>{createHistoryDate(jobDateItem.startDate)} 〜 {createHistoryDate(jobDateItem.endDate)}</DateText>
                     <SectionTitle>{jobDateItem.title}</SectionTitle>
                 </Section>

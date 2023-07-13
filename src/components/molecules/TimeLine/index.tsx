@@ -270,6 +270,7 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent,
             <TimeLineButton
                 onClick={toggleTimeline}
                 isOpen={open}
+                type="button"
             >
                 {open ? "CLOSE" : "OPEN" } JobHistory
             </TimeLineButton>
