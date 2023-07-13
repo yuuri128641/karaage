@@ -12,6 +12,7 @@ import { ResumeContents } from "@/components/organisms/ResumeContents"
 import { GlobalNavigation } from "@/components/molecules/GlobalNavigation"
 import { LoginContents } from "@/components/organisms/LoginContents"
 import ReactGA from "react-ga4";
+import { colorPalette } from "@/styles/const/color"
 
 type Props = {
   jobDates: JobHistory[]
@@ -44,19 +45,55 @@ const Wrap = styled.div`
   padding: 120px 10vw 480px 20vw;
   box-sizing: border-box;
   margin: 0 auto;
+  position: relative;
   ${mediaQuery.underPc} {
     padding-left: 20px;
     padding-right: 20px;
+    padding-top: 80px;
   }
 `;
+
+const FirstView = styled.div`
+  font-size: 200px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  writing-mode: vertical-rl;
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
+`
+
+const CopyText = styled.div`
+  writing-mode: horizontal-tb;
+  color: ${colorPalette.blue400};
+  font-size: 400px;
+  word-break: break-all;
+  text-align: right;
+  mix-blend-mode: color;
+  position: absolute;
+  right: 0;
+  width: 70%;
+  line-height: 1;
+  top: 0;
+`
+
+const CopySubText = styled.div`
+  writing-mode: vertical-rl;
+  color: ${colorPalette.lightGray700};
+  font-size: 200px;
+`
+
 
 const Home: NextPage<Props> = ({jobDates, profileDate}) => {
   const jobDate:JobHistoryFormat[] | undefined = createJobHistoryFormatDate(jobDates)
   const bodyRef = useRef<HTMLDivElement>(null)
   const [jobIndex, setJobIndex] = useState<number | undefined>()
-  const [activeContent, setActiveContent] = useState("profile")
+  const [activeContent, setActiveContent] = useState("")
   const [pageTitle, setPageTitle] = useState("titlePage")
-  const [login, setLogtinState] = useState(false)
+  const [login, setLoginState] = useState(false)
+  const [open, setOpen] = useState(true)
+  const toggleTimeline = () => setOpen(!open)
 
   const maxJobLength = jobDate.length - 1
 
@@ -90,6 +127,9 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
           <GlobalNavigation
             setJob={setJob}
             setContent={setContent}
+            toggleTimeline={toggleTimeline}
+            setOpen={setOpen}
+            maxJobLength={maxJobLength}
           />
           <Wrap>
             {jobIndex !== undefined &&  
@@ -101,6 +141,15 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
                 login={login}
               />
             }
+            {!activeContent &&
+              <FirstView>
+                <CopySubText>
+                  DEVELOPMENT<br/ >
+                  FRONTEND
+                </CopySubText>
+                <CopyText>PORTFOLIO</CopyText>
+              </FirstView>
+            }
             {activeContent === "profile" &&  
               <ProfileContents profile={profileDate} login={login} />
             }
@@ -108,11 +157,11 @@ const Home: NextPage<Props> = ({jobDates, profileDate}) => {
               <ResumeContents profile={profileDate} login={login} />
             }
             {activeContent === "login" &&  
-              <LoginContents setLogtinState={setLogtinState} login={login} />
+              <LoginContents setLoginState={setLoginState} login={login} />
             }
           </Wrap>
           {jobDate &&
-            <TimeLine jobDate={jobDate} setJob={setJob} setContent={setContent} jobIndex={jobIndex} /> 
+            <TimeLine toggleTimeline={toggleTimeline} isOpen={open} jobDate={jobDate} setJob={setJob} setContent={setContent} jobIndex={jobIndex} /> 
           }
         </div>
       </main>

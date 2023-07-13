@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { colorPalette } from "@/styles/const/color"
 import { JobHistoryFormat } from "@/models"
 import { mediaQuery } from "@/styles/const/size"
@@ -42,6 +42,20 @@ const options: Record<string, optionsProps> = {
 
 const MONTH_WIDTH = 40;
 
+const pop = keyframes`
+    0% {
+        transform: scale(1, 1);
+    }
+
+    50% {
+        transform: scale(1.05, 1.05);
+    }
+    
+    100% {
+        transform: scale(1, 1);
+    }
+`
+
 const ProjectItem = styled.div<{
     durationLength: number
     startPositionLength: number
@@ -65,6 +79,7 @@ const ProjectItem = styled.div<{
     gap: 4px;
     cursor: pointer;
     transition: opacity 0.3s ease;
+    animation: ${({isActive}) => isActive && pop } .5s ease-in-out forwards;
     background-color: ${({ themeStyle, isActive }: { themeStyle: optionsProps, isActive: boolean }) => isActive ? themeStyle.borderColor : themeStyle.backgroundColor};
     ${mediaQuery.pc} {
         &:hover {

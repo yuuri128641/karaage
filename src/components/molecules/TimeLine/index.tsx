@@ -13,6 +13,8 @@ type TimeLineProps = {
     setJob?: any
     setContent?: any
     jobIndex?: number
+    toggleTimeline: any
+    isOpen: boolean
 };
 
 const MONTH_WIDTH = 40;
@@ -206,18 +208,15 @@ const NavigationRight = styled.div<{
     }
 ` 
 
-export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent, jobIndex }) => {
+export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent, jobIndex, toggleTimeline, isOpen }) => {
     const startDate = new Date(FIRST_WORKING_DATE.year, FIRST_WORKING_DATE.month, FIRST_WORKING_DATE.day)
     const todyDate = new Date()
     const durationDates = createDurationDate(startDate, todyDate)
     const timelineEndRef = useRef<HTMLDivElement>(null)
     const timelineWrapRef = useRef<HTMLDivElement>(null)
     const dataRef = useRef<HTMLDivElement>(null)
-    const [open, setOpen] = useState(true)
     const [scrollStartPosition, setScrollStartPosition] = useState(true)
     const [scrollEndPosition, setScrollEndPosition] = useState(false)
-
-    const toggleTimeline = () => setOpen(!open)
 
     // タイムラインの高さの設定
     const duplicationEventLength = jobDate?.map(function (item) {
@@ -266,15 +265,15 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent,
     }, [])
 
     return (
-        <TimeLineWrap isOpen={open} timelineHeight={timelineHeight}>
+        <TimeLineWrap isOpen={isOpen} timelineHeight={timelineHeight}>
             <TimeLineButton
                 onClick={toggleTimeline}
-                isOpen={open}
+                isOpen={isOpen}
                 type="button"
             >
-                {open ? "CLOSE" : "OPEN" } JobHistory
+                {isOpen ? "CLOSE" : "OPEN" } JobHistory
             </TimeLineButton>
-            <ScrollArea isOpen={open} ref={timelineWrapRef} timelineHeight={timelineHeight}>
+            <ScrollArea isOpen={isOpen} ref={timelineWrapRef} timelineHeight={timelineHeight}>
                 <DateWap ref={dataRef}>
                     {durationDates.map((item, index:number) => (
                         <DateItem key="index" isJanuary={changeYear(index)}>
@@ -301,8 +300,8 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent,
                     </ProjectArea>
                     <div ref={timelineEndRef} />
                 </DateWap>
-                <NavigationLeft isOpen={open} isActive={scrollStartPosition} timelineHeight={timelineHeight} />
-                <NavigationRight isOpen={open} isActive={scrollEndPosition} timelineHeight={timelineHeight} />
+                <NavigationLeft isOpen={isOpen} isActive={scrollStartPosition} timelineHeight={timelineHeight} />
+                <NavigationRight isOpen={isOpen} isActive={scrollEndPosition} timelineHeight={timelineHeight} />
             </ScrollArea>
             <TimelineInformation />
         </TimeLineWrap>

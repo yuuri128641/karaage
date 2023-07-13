@@ -5,7 +5,7 @@ import { mediaQuery } from "@/styles/const/size"
 import { colorPalette } from "@/styles/const/color"
 
 type Props = {
-    setLogtinState?: any
+    setLoginState?: any
     login?: any
 };
 
@@ -23,7 +23,7 @@ const ErrorText = styled.div`
     font-size: 14px;
     line-height: 1.6;
     margin-top: 20px;
-    color: ${colorPalette.red400};;
+    color: ${colorPalette.red400};
 `
 
 const FormWrap = styled.div`
@@ -87,7 +87,7 @@ const LoginText = styled.span`
     color: ${colorPalette.blue500};
 `
 
-export const LoginContents: React.FC<Props>= ({ setLogtinState, login }) => {
+export const LoginContents: React.FC<Props>= ({ setLoginState, login }) => {
 
     const [id, setId] = useState("")
     const [password, setPassword] = useState("")
@@ -95,7 +95,7 @@ export const LoginContents: React.FC<Props>= ({ setLogtinState, login }) => {
 
     const onSubmit = () => {
         if (id == process.env.NEXT_PUBLIC_ANNRIS_KEY_ID && password == process.env.NEXT_PUBLIC_ANNRIS_KEY_PASS) {
-            setLogtinState(true)
+            setLoginState(true)
         } else {
             setIsError(true)
         }

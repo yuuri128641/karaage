@@ -6,6 +6,9 @@ import { mediaQuery } from "@/styles/const/size"
 type GlobalNavigationProps = {
     setJob: any
     setContent: any
+    toggleTimeline: any
+    setOpen: any
+    maxJobLength: number
 };
 
 const Title = styled.h1`
@@ -92,22 +95,22 @@ const LinkWrap = styled.div<{isOpen: boolean }>`
     flex-flow: column;
     padding: 0 20px;
     position: fixed;
-    z-index: 1000;
-
+    z-index: 400;
+    background-color: rgba(255, 255, 255, 0.9);
+    height: 100%;
     ${mediaQuery.pc} {
         padding-top: 20px;
         top: 60px;
     }
 
     ${mediaQuery.underPc} {
-        height: 100%;
+        z-index: 1000;
         box-sizing: border-box;
         right: ${({ isOpen }) =>  isOpen ? "-220px" : 0 }; 
         width: 220px;
         text-align: right;
         top: 0;
         padding-top: 120px;
-        background-color: rgba(255, 255, 255, 0.9);
         transition: all 0.3s ease;
     }
 `;
@@ -149,27 +152,28 @@ const LoginLink = styled.button`
     }
 `
 
-export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setContent }) => {
-    const [open, setOpen] = useState(true)
-    const toggleTimeline = () => setOpen(!open)
+export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setContent, setOpen, maxJobLength }) => {
+    const [menuOpen, setMenuOpen] = useState(true)
+    const toggleMenu = () => setMenuOpen(!menuOpen)
     return (
         <>
             <Title><TitleName>annris</TitleName>PORTFOLIO</Title>
             <Button
-                onClick={toggleTimeline}
-                isOpen={open}
+                onClick={toggleMenu}
+                isOpen={menuOpen}
                 type="button"
             >
-                <ButtonLine isOpen={open} />
-                <ButtonLine isOpen={open} />
-                <ButtonLine isOpen={open} />
+                <ButtonLine isOpen={menuOpen} />
+                <ButtonLine isOpen={menuOpen} />
+                <ButtonLine isOpen={menuOpen} />
             </Button>
-            <LinkWrap isOpen={open}>
+            <LinkWrap isOpen={menuOpen}>
                 <LinkItem
                     onClick={() => {
                         setJob()
                         setContent("profile")
-                        toggleTimeline()
+                        toggleMenu()
+                        setOpen(false)
                     }}
                 >
                     PROFILE
@@ -178,10 +182,21 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setC
                     onClick={() => {
                         setJob()
                         setContent("resume")
-                        toggleTimeline()
+                        toggleMenu()
+                        setOpen(false)
                     }}
                 >
                     RESUME
+                </LinkItem>
+                <LinkItem
+                    onClick={() => {
+                        setJob(maxJobLength)
+                        setContent("jobHistory")
+                        toggleMenu()
+                        setOpen(true)
+                    }}
+                >
+                    JOB HISTORY
                 </LinkItem>
                 {/* <LinkItem
                     onClick={() => {
@@ -206,7 +221,8 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setC
                     onClick={() => {
                         setJob()
                         setContent("login")
-                        toggleTimeline()
+                        toggleMenu()
+                        setOpen(false)
                     }}
                 >
                     LOGIN
