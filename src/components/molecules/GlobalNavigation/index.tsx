@@ -196,7 +196,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ setJob, setC
                         setOpen(true)
                     }}
                 >
-                    JOB HISTORY
+                    JOB TIMELINE
                 </LinkItem>
                 {/* <LinkItem
                     onClick={() => {

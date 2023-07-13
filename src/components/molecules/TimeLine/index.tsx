@@ -52,7 +52,7 @@ const TimeLineButton = styled.button<{isOpen: boolean}>`
     right: 0;
     top: -40px;
     height: 40px;
-    width: 200px;
+    width: 260px;
     border: 0;
     color: ${colorPalette.lightGray1000};
     border-top: 4px solid ${colorPalette.lightGray1000};
@@ -271,7 +271,7 @@ export const TimeLine: React.FC<TimeLineProps> = ({ jobDate, setJob, setContent,
                 isOpen={isOpen}
                 type="button"
             >
-                {isOpen ? "CLOSE" : "OPEN" } JobHistory
+                {isOpen ? "CLOSE" : "OPEN" } JOB TIMELINE
             </TimeLineButton>
             <ScrollArea isOpen={isOpen} ref={timelineWrapRef} timelineHeight={timelineHeight}>
                 <DateWap ref={dataRef}>
